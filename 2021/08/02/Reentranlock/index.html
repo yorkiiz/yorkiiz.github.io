@@ -11,15 +11,15 @@
     
 
     
-    <meta name="description" content="redis配置 查看6379（或者自定义redis端口）时候打开 firewall-cmd –query-port&#x3D;6379&#x2F;tcp 如果返回no则端口没有开启 firewall-cmd –add-port&#x3D;6379&#x2F;tcp （加 –permanent 永久有效），返回success说明开启成功">
+    <meta name="description" content="Reentranlock thread1 执行业务代码lock 把aqs里的state改成1  cas操作aba，aba操作加版本号 park和unpark可以指定线程 非公平锁的体现，前线程执行完以后，unpark的线程和新来的线程同时抢占锁 公平锁和非公平锁的区别： 只能队列里面的抢占，可以队列里面的线程和刚进来的线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yorkiiz">
-<meta property="og:url" content="https://yorkiiz.github.io/2021/08/02/redis%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/08/02/Reentranlock/index.html">
 <meta property="og:site_name" content="yorkiiz">
-<meta property="og:description" content="redis配置 查看6379（或者自定义redis端口）时候打开 firewall-cmd –query-port&#x3D;6379&#x2F;tcp 如果返回no则端口没有开启 firewall-cmd –add-port&#x3D;6379&#x2F;tcp （加 –permanent 永久有效），返回success说明开启成功">
+<meta property="og:description" content="Reentranlock thread1 执行业务代码lock 把aqs里的state改成1  cas操作aba，aba操作加版本号 park和unpark可以指定线程 非公平锁的体现，前线程执行完以后，unpark的线程和新来的线程同时抢占锁 公平锁和非公平锁的区别： 只能队列里面的抢占，可以队列里面的线程和刚进来的线程">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-02T13:24:04.053Z">
-<meta property="article:modified_time" content="2021-08-01T11:04:16.910Z">
+<meta property="article:published_time" content="2021-08-02T13:30:49.838Z">
+<meta property="article:modified_time" content="2021-07-09T15:27:06.768Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -85,14 +85,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2021/08/02/redis配置/" title="" itemprop="url"></a>
+      <a href="/2021/08/02/Reentranlock/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
 		
   <p class="article-time">
-    <time datetime="2021-08-02T13:24:04.053Z" itemprop="datePublished"> Published 2021-08-02</time>
+    <time datetime="2021-08-02T13:30:49.838Z" itemprop="datePublished"> Published 2021-08-02</time>
     
   </p>
 </header>
@@ -101,17 +101,17 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">redis配置</span></a></li></ol>
+			
 		
 		</div>
 		
-		<h4 id="redis配置"><a href="#redis配置" class="headerlink" title="redis配置"></a>redis配置</h4><ol>
-<li>查看6379（或者自定义redis端口）时候打开<ul>
-<li>firewall-cmd –query-port=6379/tcp 如果返回no则端口没有开启</li>
-<li>firewall-cmd –add-port=6379/tcp （加 –permanent 永久有效），返回success说明开启成功</li>
-</ul>
-</li>
-</ol>
+		<p>Reentranlock</p>
+<p>thread1 执行业务代码lock</p>
+<p>把aqs里的state改成1  cas操作aba，aba操作加版本号</p>
+<p>park和unpark可以指定线程</p>
+<p>非公平锁的体现，前线程执行完以后，unpark的线程和新来的线程同时抢占锁</p>
+<p>公平锁和非公平锁的区别：</p>
+<p>只能队列里面的抢占，可以队列里面的线程和刚进来的线程</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -124,7 +124,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://yorkiiz.github.io/2021/08/02/redis%E9%85%8D%E7%BD%AE/" data-title="yorkiiz" data-tsina="" class="share clearfix">
+	  <div data-url="https://yorkiiz.github.io/2021/08/02/Reentranlock/" data-title="yorkiiz" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,7 +138,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2021/08/02/lock和synchronize的区别/" title="">
+ <a href="/2021/08/02/hexo常用指令/" title="">
   <strong>上一篇：</strong><br/>
   <span>
   (no title)</span>
@@ -147,7 +147,7 @@
 
 
 <div class="next">
-<a href="/2021/08/02/spring自动装配/"  title="">
+<a href="/2021/08/02/ACID/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -166,7 +166,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">redis配置</span></a></li></ol>
+ 
  
   </div>
 

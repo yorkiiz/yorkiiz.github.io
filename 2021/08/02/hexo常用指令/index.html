@@ -11,15 +11,15 @@
     
 
     
-    <meta name="description" content="redis配置 查看6379（或者自定义redis端口）时候打开 firewall-cmd –query-port&#x3D;6379&#x2F;tcp 如果返回no则端口没有开启 firewall-cmd –add-port&#x3D;6379&#x2F;tcp （加 –permanent 永久有效），返回success说明开启成功">
+    <meta name="description" content="hexo常用指令安装gitapt-get install git 安装nodejsapt-get install nodejs apt-get install npm node -v npm -v 安装hexoinstall -g hexo-cli hexo -v 初始化hexohexo init myblog cd myblog &#x2F;&#x2F;进入这个myblog文件夹 npm install hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yorkiiz">
-<meta property="og:url" content="https://yorkiiz.github.io/2021/08/02/redis%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/08/02/hexo%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/index.html">
 <meta property="og:site_name" content="yorkiiz">
-<meta property="og:description" content="redis配置 查看6379（或者自定义redis端口）时候打开 firewall-cmd –query-port&#x3D;6379&#x2F;tcp 如果返回no则端口没有开启 firewall-cmd –add-port&#x3D;6379&#x2F;tcp （加 –permanent 永久有效），返回success说明开启成功">
+<meta property="og:description" content="hexo常用指令安装gitapt-get install git 安装nodejsapt-get install nodejs apt-get install npm node -v npm -v 安装hexoinstall -g hexo-cli hexo -v 初始化hexohexo init myblog cd myblog &#x2F;&#x2F;进入这个myblog文件夹 npm install hexo">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-02T13:24:04.053Z">
-<meta property="article:modified_time" content="2021-08-01T11:04:16.910Z">
+<meta property="article:published_time" content="2021-08-02T13:36:13.116Z">
+<meta property="article:modified_time" content="2021-08-02T13:36:08.656Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -35,8 +35,6 @@
     
     
 <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/%02.css">
-<link rel="stylesheet" href="/.css">
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
@@ -85,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2021/08/02/redis配置/" title="" itemprop="url"></a>
+      <a href="/2021/08/02/hexo常用指令/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
 		
   <p class="article-time">
-    <time datetime="2021-08-02T13:24:04.053Z" itemprop="datePublished"> Published 2021-08-02</time>
+    <time datetime="2021-08-02T13:36:13.116Z" itemprop="datePublished"> Published 2021-08-02</time>
     
   </p>
 </header>
@@ -101,17 +99,39 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">redis配置</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">hexo常用指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85git"><span class="toc-number">1.1.</span> <span class="toc-text">安装git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nodejs"><span class="toc-number">1.2.</span> <span class="toc-text">安装nodejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85hexo"><span class="toc-number">1.3.</span> <span class="toc-text">安装hexo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96hexo"><span class="toc-number">1.4.</span> <span class="toc-text">初始化hexo</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E4%BB%93%E5%BA%93"><span class="toc-number">2.</span> <span class="toc-text">GitHub创建个人仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#github%E6%B7%BB%E5%8A%A0ssh"><span class="toc-number">2.1.</span> <span class="toc-text">github添加ssh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86hexo%E9%83%A8%E7%BD%B2%E5%88%B0github"><span class="toc-number">2.2.</span> <span class="toc-text">将hexo部署到github</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h4 id="redis配置"><a href="#redis配置" class="headerlink" title="redis配置"></a>redis配置</h4><ol>
-<li>查看6379（或者自定义redis端口）时候打开<ul>
-<li>firewall-cmd –query-port=6379/tcp 如果返回no则端口没有开启</li>
-<li>firewall-cmd –add-port=6379/tcp （加 –permanent 永久有效），返回success说明开启成功</li>
-</ul>
-</li>
-</ol>
+		<h3 id="hexo常用指令"><a href="#hexo常用指令" class="headerlink" title="hexo常用指令"></a>hexo常用指令</h3><h4 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h4><p>apt-get install git</p>
+<h4 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h4><p>apt-get install nodejs</p>
+<p>apt-get install npm</p>
+<p>node -v</p>
+<p>npm -v</p>
+<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><p>install -g hexo-cli</p>
+<p>hexo -v</p>
+<h4 id="初始化hexo"><a href="#初始化hexo" class="headerlink" title="初始化hexo"></a>初始化hexo</h4><p>hexo init myblog</p>
+<p>cd myblog //进入这个myblog文件夹</p>
+<p>npm install</p>
+<p>hexo g</p>
+<p>hexo server</p>
+<p>打开hexo的服务，在浏览器输入localhost:4000就可以看到你生成的博客了。</p>
+<h3 id="GitHub创建个人仓库"><a href="#GitHub创建个人仓库" class="headerlink" title="GitHub创建个人仓库"></a>GitHub创建个人仓库</h3><p>创建一个和你用户名相同的仓库，<a target="_blank" rel="noopener" href="http://后面加.github.io/">后面加.github.io</a></p>
+<p>新建分支仓库</p>
+<p>master用于存放hexo数据，分支用于存放代码，用于分布式使用</p>
+<h4 id="github添加ssh"><a href="#github添加ssh" class="headerlink" title="github添加ssh"></a>github添加ssh</h4><p>git config –global user.name “yourname”</p>
+<p> git config –global user.email “youremail”</p>
+<p>git config user.name</p>
+<p> git config user.email</p>
+<p>ssh-keygen -t rsa -C “youremail”</p>
+<p>ssh -T <a href="mailto:&#x67;&#x69;&#116;&#x40;&#103;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;">&#x67;&#x69;&#116;&#x40;&#103;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;</a></p>
+<h4 id="将hexo部署到github"><a href="#将hexo部署到github" class="headerlink" title="将hexo部署到github"></a>将hexo部署到github</h4><p>deploy:</p>
+<p>  type: git</p>
+<p>  repo: <a target="_blank" rel="noopener" href="https://github.com/YourgithubName/YourgithubName.github.io.git">https://github.com/YourgithubName/YourgithubName.github.io.git</a></p>
+<p>  branch: master</p>
+<p>hexo clean</p>
+<p>hexo generate</p>
+<p>hexo deploy</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -124,7 +144,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://yorkiiz.github.io/2021/08/02/redis%E9%85%8D%E7%BD%AE/" data-title="yorkiiz" data-tsina="" class="share clearfix">
+	  <div data-url="https://yorkiiz.github.io/2021/08/02/hexo%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" data-title="yorkiiz" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,17 +157,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2021/08/02/lock和synchronize的区别/" title="">
-  <strong>上一篇：</strong><br/>
-  <span>
-  (no title)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2021/08/02/spring自动装配/"  title="">
+<a href="/2021/08/02/Reentranlock/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -166,7 +178,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">redis配置</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">hexo常用指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85git"><span class="toc-number">1.1.</span> <span class="toc-text">安装git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nodejs"><span class="toc-number">1.2.</span> <span class="toc-text">安装nodejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85hexo"><span class="toc-number">1.3.</span> <span class="toc-text">安装hexo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96hexo"><span class="toc-number">1.4.</span> <span class="toc-text">初始化hexo</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E4%BB%93%E5%BA%93"><span class="toc-number">2.</span> <span class="toc-text">GitHub创建个人仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#github%E6%B7%BB%E5%8A%A0ssh"><span class="toc-number">2.1.</span> <span class="toc-text">github添加ssh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86hexo%E9%83%A8%E7%BD%B2%E5%88%B0github"><span class="toc-number">2.2.</span> <span class="toc-text">将hexo部署到github</span></a></li></ol></li></ol>
  
   </div>
 
