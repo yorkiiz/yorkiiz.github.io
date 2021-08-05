@@ -83,6 +83,99 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/05/1.jvm进行篇/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-05T15:01:52.844Z" itemprop="datePublished"> Published 2021-08-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="1-jvm进行篇"><a href="#1-jvm进行篇" class="headerlink" title="1.jvm进行篇"></a>1.jvm进行篇</h3><h4 id="1-1内存分配"><a href="#1-1内存分配" class="headerlink" title="1.1内存分配"></a>1.1内存分配</h4><table>
+<thead>
+<tr>
+<th></th>
+<th>是否私有</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>程序计数器</td>
+<td>私有</td>
+<td>没有oom</td>
+</tr>
+<tr>
+<td>虚拟机栈</td>
+<td>私有</td>
+<td>局部变量表，每个方法是一个栈帧，方法返回地址，静态链接，动态链接，基本数据类型</td>
+</tr>
+<tr>
+<td>本地方法栈</td>
+<td>私有</td>
+<td>调用native方法</td>
+</tr>
+<tr>
+<td>方法区（元空间）</td>
+<td>公有</td>
+<td>类信息，常量，静态变量，数据符号引用</td>
+</tr>
+<tr>
+<td>堆</td>
+<td>公有</td>
+<td>老年代，新生代（eden，s0，s1）；stw，minorgc，majorgc，fullgc；new产生的实例</td>
+</tr>
+</tbody></table>
+<p>虚拟机栈：</p>
+<p>静态链接：Map map = new HashMap（）；</p>
+<p>动态链接：map.get();</p>
+<p>堆：</p>
+<p>stw：内存满了，垃圾回收，触发stw。</p>
+<p>新生代为什么分为Eden区，s0，s1；避免垃圾回收产生大量碎片</p>
+<p>新:老=1:2</p>
+<p>//虚拟机栈：8中基本数据类型，对象引用</p>
+<p>//堆：new</p>
+<p>//方法区:类的描述信息，常量，静态变量，符号引用</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/02/hexo常用指令/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
