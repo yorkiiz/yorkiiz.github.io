@@ -4,27 +4,27 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>redis zset | yorkiiz</title>
+    <title>yorkiiz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="yorkiiz">
     
 
     
-    <meta name="description" content="redis Zset每个值都有一个分数  zset操作指令 zadd myzset 10 java 20 php 30 ruby 40 cpp 50 python zrange myzset 0 -1 withscores zrevrange myzset 0 -1 withscores zrangebyscore myzset 20 30 zrem myzset php cpp 移除 zcard">
+    <meta name="description" content="数据淘汰与内存回收1.定时过期：到了key的过期时间，立即删除 2.惰性过期：key被访问的时候才判断是否过期，过期则删除 3.定时过期：每隔一段时间，清除一定数量的过期的key  maxmemory  config set maxmemory 2GB lru:least recently used lfu:least frequently used 实现一个lru的算法： 链表+hash 链表里">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis zset">
-<meta property="og:url" content="https://yorkiiz.github.io/2021/08/09/redis%20Zset/index.html">
+<meta property="og:title" content="yorkiiz">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/08/13/redis%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/index.html">
 <meta property="og:site_name" content="yorkiiz">
-<meta property="og:description" content="redis Zset每个值都有一个分数  zset操作指令 zadd myzset 10 java 20 php 30 ruby 40 cpp 50 python zrange myzset 0 -1 withscores zrevrange myzset 0 -1 withscores zrangebyscore myzset 20 30 zrem myzset php cpp 移除 zcard">
+<meta property="og:description" content="数据淘汰与内存回收1.定时过期：到了key的过期时间，立即删除 2.惰性过期：key被访问的时候才判断是否过期，过期则删除 3.定时过期：每隔一段时间，清除一定数量的过期的key  maxmemory  config set maxmemory 2GB lru:least recently used lfu:least frequently used 实现一个lru的算法： 链表+hash 链表里">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210809203057248.png">
-<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210809204202227.png">
-<meta property="article:published_time" content="2021-08-09T12:42:54.725Z">
-<meta property="article:modified_time" content="2021-08-09T12:51:53.662Z">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811192730434.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811195353107.png">
+<meta property="article:published_time" content="2021-08-13T15:32:08.534Z">
+<meta property="article:modified_time" content="2021-08-11T11:55:25.720Z">
 <meta property="article:author" content="yorkiiz">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210809203057248.png">
+<meta name="twitter:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811192730434.png">
 
     
     <link rel="alternative" href="/atom.xml" title="yorkiiz" type="application/atom+xml">
@@ -38,8 +38,6 @@
     
     
 <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/%02.css">
-<link rel="stylesheet" href="/.css">
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
@@ -88,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2021/08/09/redis Zset/" title="redis zset" itemprop="url">redis zset</a>
+      <a href="/2021/08/13/redis数据淘汰与内存回收/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
 		
   <p class="article-time">
-    <time datetime="2021-08-09T12:42:54.725Z" itemprop="datePublished"> Published 2021-08-09</time>
+    <time datetime="2021-08-13T15:32:08.534Z" itemprop="datePublished"> Published 2021-08-13</time>
     
   </p>
 </header>
@@ -104,26 +102,28 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-Zset"><span class="toc-number">1.</span> <span class="toc-text">redis Zset</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">数据淘汰与内存回收</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="redis-Zset"><a href="#redis-Zset" class="headerlink" title="redis Zset"></a>redis Zset</h3><p>每个值都有一个分数</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210809203057248.png" alt="image-20210809203057248"></p>
-<p>zset操作指令</p>
-<p>zadd myzset 10 java 20 php 30 ruby 40 cpp 50 python</p>
-<p>zrange myzset 0 -1 withscores</p>
-<p>zrevrange myzset 0 -1 withscores</p>
-<p>zrangebyscore myzset 20 30</p>
-<p>zrem myzset php cpp 移除</p>
-<p>zcard myzset 统计还有多少</p>
-<p>zcount myzset 20 60</p>
-<p>zcount myzset 20 60</p>
-<p>zrank myzset java</p>
-<p>zscore myzset java</p>
-<p>应用</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210809204202227.png" alt="image-20210809204202227"></p>
-<p>排行榜</p>
+		<h3 id="数据淘汰与内存回收"><a href="#数据淘汰与内存回收" class="headerlink" title="数据淘汰与内存回收"></a>数据淘汰与内存回收</h3><p>1.定时过期：到了key的过期时间，立即删除</p>
+<p>2.<strong>惰性过期</strong>：key被访问的时候才判断是否过期，过期则删除</p>
+<p>3.<strong>定时过期</strong>：每隔一段时间，清除一定数量的过期的key</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811192730434.png" alt="image-20210811192730434"></p>
+<p>maxmemory </p>
+<p>config set maxmemory 2GB</p>
+<p>lru:least recently used</p>
+<p>lfu:least frequently used</p>
+<p>实现一个lru的算法：</p>
+<p>链表+hash</p>
+<p>链表里面放元素，放满了就把最后面的元素给删除</p>
+<p>redis里面是每个key保持一个时间戳，key更新时从server.lruclock拿取时间</p>
+<p>采样的时候就删除一些数据</p>
+<p>lfu</p>
+<p>基于访问频率实现</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811195353107.png" alt="image-20210811195353107"></p>
+<p>log-factor越大，计数器增长越慢</p>
+<p>lfu-decay-time 一分钟减小1</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -136,7 +136,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://yorkiiz.github.io/2021/08/09/redis%20Zset/" data-title="redis zset | yorkiiz" data-tsina="" class="share clearfix">
+	  <div data-url="https://yorkiiz.github.io/2021/08/13/redis%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/" data-title="yorkiiz" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -149,17 +149,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2021/08/10/redis GEO Spatial & Hyperloglogs/" title="">
-  <strong>上一篇：</strong><br/>
-  <span>
-  (no title)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2021/08/05/maven是用来下载依赖和打包代码的工具/"  title="">
+<a href="/2021/08/13/Redis lua脚本/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -178,7 +170,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-Zset"><span class="toc-number">1.</span> <span class="toc-text">redis Zset</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">数据淘汰与内存回收</span></a></li></ol>
  
   </div>
 
