@@ -11,20 +11,17 @@
     
 
     
-    <meta name="description" content="数据淘汰与内存回收1.定时过期：到了key的过期时间，立即删除 2.惰性过期：key被访问的时候才判断是否过期，过期则删除 3.定时过期：每隔一段时间，清除一定数量的过期的key  maxmemory  config set maxmemory 2GB lru:least recently used lfu:least frequently used 实现一个lru的算法： 链表+hash 链表里">
+    <meta name="description" content="rabbit mq连接失败12345678910111213ConnectionFactory factory &#x3D; new ConnectionFactory();&#x2F;&#x2F; 连接IPfactory.setHost(&quot;192.168.1.128&quot;);&#x2F;&#x2F; 默认监听端口factory.setPort(15672);&#x2F;&#x2F; 虚拟机factory.setVirtualHost(&quot;&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yorkiiz">
-<meta property="og:url" content="https://yorkiiz.github.io/2021/08/13/redis%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/index.html">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/08/16/rabbit%20mq%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/index.html">
 <meta property="og:site_name" content="yorkiiz">
-<meta property="og:description" content="数据淘汰与内存回收1.定时过期：到了key的过期时间，立即删除 2.惰性过期：key被访问的时候才判断是否过期，过期则删除 3.定时过期：每隔一段时间，清除一定数量的过期的key  maxmemory  config set maxmemory 2GB lru:least recently used lfu:least frequently used 实现一个lru的算法： 链表+hash 链表里">
+<meta property="og:description" content="rabbit mq连接失败12345678910111213ConnectionFactory factory &#x3D; new ConnectionFactory();&#x2F;&#x2F; 连接IPfactory.setHost(&quot;192.168.1.128&quot;);&#x2F;&#x2F; 默认监听端口factory.setPort(15672);&#x2F;&#x2F; 虚拟机factory.setVirtualHost(&quot;&#x2F;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811192730434.png">
-<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811195353107.png">
-<meta property="article:published_time" content="2021-08-13T15:32:08.534Z">
-<meta property="article:modified_time" content="2021-08-11T11:55:25.720Z">
+<meta property="article:published_time" content="2021-08-15T17:15:36.679Z">
+<meta property="article:modified_time" content="2021-08-15T16:12:44.892Z">
 <meta property="article:author" content="yorkiiz">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811192730434.png">
 
     
     <link rel="alternative" href="/atom.xml" title="yorkiiz" type="application/atom+xml">
@@ -88,14 +85,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2021/08/13/redis数据淘汰与内存回收/" title="" itemprop="url"></a>
+      <a href="/2021/08/16/rabbit mq连接失败/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
 		
   <p class="article-time">
-    <time datetime="2021-08-13T15:32:08.534Z" itemprop="datePublished"> Published 2021-08-13</time>
+    <time datetime="2021-08-15T17:15:36.679Z" itemprop="datePublished"> Published 2021-08-16</time>
     
   </p>
 </header>
@@ -104,28 +101,16 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">数据淘汰与内存回收</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#rabbit-mq%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5"><span class="toc-number">1.</span> <span class="toc-text">rabbit mq连接失败</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A6%821%EF%BC%8C%E6%8A%A5%E9%94%99%E5%A6%822"><span class="toc-number">1.1.</span> <span class="toc-text">代码如1，报错如2</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h3 id="数据淘汰与内存回收"><a href="#数据淘汰与内存回收" class="headerlink" title="数据淘汰与内存回收"></a>数据淘汰与内存回收</h3><p>1.定时过期：到了key的过期时间，立即删除</p>
-<p>2.<strong>惰性过期</strong>：key被访问的时候才判断是否过期，过期则删除</p>
-<p>3.<strong>定时过期</strong>：每隔一段时间，清除一定数量的过期的key</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811192730434.png" alt="image-20210811192730434"></p>
-<p>maxmemory </p>
-<p>config set maxmemory 2GB</p>
-<p>lru:least recently used</p>
-<p>lfu:least frequently used</p>
-<p>实现一个lru的算法：</p>
-<p>链表+hash</p>
-<p>链表里面放元素，放满了就把最后面的元素给删除</p>
-<p>redis里面是每个key保持一个时间戳，key更新时从server.lruclock拿取时间</p>
-<p>采样的时候就删除一些数据</p>
-<p>lfu</p>
-<p>基于访问频率实现</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811195353107.png" alt="image-20210811195353107"></p>
-<p>log-factor越大，计数器增长越慢</p>
-<p>lfu-decay-time 一分钟减小1</p>
+		<h3 id="rabbit-mq连接失败"><a href="#rabbit-mq连接失败" class="headerlink" title="rabbit mq连接失败"></a>rabbit mq连接失败</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ConnectionFactory factory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line"><span class="comment">// 连接IP</span></span><br><span class="line">factory.setHost(<span class="string">&quot;192.168.1.128&quot;</span>);</span><br><span class="line"><span class="comment">// 默认监听端口</span></span><br><span class="line">factory.setPort(<span class="number">15672</span>);</span><br><span class="line"><span class="comment">// 虚拟机</span></span><br><span class="line">factory.setVirtualHost(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置访问的用户</span></span><br><span class="line">factory.setUsername(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">factory.setPassword(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"><span class="comment">// 建立连接</span></span><br><span class="line">Connection conn = factory.newConnection();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;C:\Program Files\java\jdk1.8.0_91\bin\java.exe&quot;</span> <span class="string">&quot;-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\lib\idea_rt.jar=54668:C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\bin&quot;</span> -Dfile.encoding=UTF-<span class="number">8</span> -classpath <span class="string">&quot;C:\Program Files\java\jdk1.8.0_91\jre\lib\charsets.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\deploy.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\access-bridge-64.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\cldrdata.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\dnsns.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\jaccess.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\jfxrt.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\localedata.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\nashorn.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunec.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunjce_provider.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunmscapi.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunpkcs11.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\zipfs.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\javaws.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jce.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jfr.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jfxswt.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jsse.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\management-agent.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\plugin.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\resources.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\rt.jar;D:\study\mq\gupaoedu-vip-rabbitmq-javaapi\target\classes;D:\repository\com\rabbitmq\amqp-client\5.6.0\amqp-client-5.6.0.jar;D:\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;D:\repository\org\slf4j\slf4j-simple\1.7.25\slf4j-simple-1.7.25.jar&quot;</span> com.gupaoedu.simple.MyConsumer</span><br><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.io.IOException</span><br><span class="line">	at com.rabbitmq.client.impl.AMQChannel.wrap(AMQChannel.java:<span class="number">129</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQChannel.wrap(AMQChannel.java:<span class="number">125</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQConnection.start(AMQConnection.java:<span class="number">375</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.recovery.RecoveryAwareAMQConnectionFactory.newConnection(RecoveryAwareAMQConnectionFactory.java:<span class="number">64</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.recovery.AutorecoveringConnection.init(AutorecoveringConnection.java:<span class="number">156</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1106</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1063</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1021</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1182</span>)</span><br><span class="line">	at com.gupaoedu.simple.MyConsumer.main(MyConsumer.java:<span class="number">29</span>)</span><br><span class="line">Caused by: com.rabbitmq.client.ShutdownSignalException: connection error</span><br><span class="line">	at com.rabbitmq.utility.ValueOrException.getValue(ValueOrException.java:<span class="number">66</span>)</span><br><span class="line">	at com.rabbitmq.utility.BlockingValueOrException.uninterruptibleGetValue(BlockingValueOrException.java:<span class="number">36</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQChannel$BlockingRpcContinuation.getReply(AMQChannel.java:<span class="number">502</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQConnection.start(AMQConnection.java:<span class="number">317</span>)</span><br><span class="line">	... <span class="number">7</span> more</span><br><span class="line">Caused by: java.io.EOFException</span><br><span class="line">	at java.io.DataInputStream.readUnsignedByte(DataInputStream.java:<span class="number">290</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:<span class="number">91</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:<span class="number">164</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:<span class="number">598</span>)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="代码如1，报错如2"><a href="#代码如1，报错如2" class="headerlink" title="代码如1，报错如2"></a>代码如1，报错如2</h4><p>报错原因，rabbit mq的15672为管理端口，使用5672端口即可。</p>
+<p>某些情况用15672端口也行</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -138,7 +123,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://yorkiiz.github.io/2021/08/13/redis%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/" data-title="yorkiiz" data-tsina="" class="share clearfix">
+	  <div data-url="https://yorkiiz.github.io/2021/08/16/rabbit%20mq%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/" data-title="yorkiiz" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -152,7 +137,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2021/08/16/rabbit mq连接失败/" title="">
+ <a href="/2021/08/16/rabbitmq与erlang安装/" title="">
   <strong>上一篇：</strong><br/>
   <span>
   (no title)</span>
@@ -161,7 +146,7 @@
 
 
 <div class="next">
-<a href="/2021/08/13/Redis lua脚本/"  title="">
+<a href="/2021/08/13/redis数据淘汰与内存回收/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -180,7 +165,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">数据淘汰与内存回收</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#rabbit-mq%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5"><span class="toc-number">1.</span> <span class="toc-text">rabbit mq连接失败</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A6%821%EF%BC%8C%E6%8A%A5%E9%94%99%E5%A6%822"><span class="toc-number">1.1.</span> <span class="toc-text">代码如1，报错如2</span></a></li></ol></li></ol>
  
   </div>
 

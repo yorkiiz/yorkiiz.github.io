@@ -83,6 +83,179 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/05/Reentranlock/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-05T15:14:47.443Z" itemprop="datePublished"> Published 2021-08-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Reentranlock</p>
+<p>thread1 执行业务代码lock</p>
+<p>把aqs里的state改成1  cas操作aba，aba操作加版本号</p>
+<p>park和unpark可以指定线程</p>
+<p>非公平锁的体现，前线程执行完以后，unpark的线程和新来的线程同时抢占锁</p>
+<p>公平锁和非公平锁的区别：</p>
+<p>只能队列里面的抢占，可以队列里面的线程和刚进来的线程</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/08/05/redis配置/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-05T15:14:47.438Z" itemprop="datePublished"> Published 2021-08-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="redis配置"><a href="#redis配置" class="headerlink" title="redis配置"></a>redis配置</h4><ol>
+<li>查看6379（或者自定义redis端口）时候打开<ul>
+<li>firewall-cmd –query-port=6379/tcp 如果返回no则端口没有开启</li>
+<li>firewall-cmd –add-port=6379/tcp （加 –permanent 永久有效），返回success说明开启成功</li>
+</ul>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/08/05/lock和synchronize的区别/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-05T15:14:47.428Z" itemprop="datePublished"> Published 2021-08-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>lock和synchronize的区别</p>
+<p>1.lock支持公平与非公平锁，synchronize非公平锁</p>
+<p>2.</p>
+<p>excute–addworker—</p>
+<p>int c = ctl.get()</p>
+<p>判断线程池线程数量是不是小于corepoolsize</p>
+<p>addworker</p>
+<p>new 一个worker</p>
+<p>worker.start</p>
+<p>runworker</p>
+<p>run方法</p>
+<p>111 01111</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/05/hexo常用指令/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By

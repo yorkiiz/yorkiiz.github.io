@@ -11,20 +11,19 @@
     
 
     
-    <meta name="description" content="数据淘汰与内存回收1.定时过期：到了key的过期时间，立即删除 2.惰性过期：key被访问的时候才判断是否过期，过期则删除 3.定时过期：每隔一段时间，清除一定数量的过期的key  maxmemory  config set maxmemory 2GB lru:least recently used lfu:least frequently used 实现一个lru的算法： 链表+hash 链表里">
+    <meta name="description" content="rabbitmq与erlang安装版本关系1、RabbitMQ依赖于Erlang，需要先安装Erlang2、Erlang和RabbitMQ版本有对应关系http:&#x2F;&#x2F;www.rabbitmq.com&#x2F;which-erlang.html  下载安装Erlang 23.1如果下载太慢了，可以把地址贴到迅雷里面，下载到本机 https:&#x2F;&#x2F;www.erlang.org&#x2F;downloads&#x2F;23.1exe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yorkiiz">
-<meta property="og:url" content="https://yorkiiz.github.io/2021/08/13/redis%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/index.html">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/08/16/rabbitmq%E4%B8%8Eerlang%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="yorkiiz">
-<meta property="og:description" content="数据淘汰与内存回收1.定时过期：到了key的过期时间，立即删除 2.惰性过期：key被访问的时候才判断是否过期，过期则删除 3.定时过期：每隔一段时间，清除一定数量的过期的key  maxmemory  config set maxmemory 2GB lru:least recently used lfu:least frequently used 实现一个lru的算法： 链表+hash 链表里">
+<meta property="og:description" content="rabbitmq与erlang安装版本关系1、RabbitMQ依赖于Erlang，需要先安装Erlang2、Erlang和RabbitMQ版本有对应关系http:&#x2F;&#x2F;www.rabbitmq.com&#x2F;which-erlang.html  下载安装Erlang 23.1如果下载太慢了，可以把地址贴到迅雷里面，下载到本机 https:&#x2F;&#x2F;www.erlang.org&#x2F;downloads&#x2F;23.1exe">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811192730434.png">
-<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811195353107.png">
-<meta property="article:published_time" content="2021-08-13T15:32:08.534Z">
-<meta property="article:modified_time" content="2021-08-11T11:55:25.720Z">
+<meta property="og:image" content="https://gper.club/server-img//mdEditors/2020/10/c6a793d8069c4ada8acb1a2e2bd3ae1b.png">
+<meta property="article:published_time" content="2021-08-15T17:15:36.684Z">
+<meta property="article:modified_time" content="2021-08-15T14:51:25.248Z">
 <meta property="article:author" content="yorkiiz">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210811192730434.png">
+<meta name="twitter:image" content="https://gper.club/server-img//mdEditors/2020/10/c6a793d8069c4ada8acb1a2e2bd3ae1b.png">
 
     
     <link rel="alternative" href="/atom.xml" title="yorkiiz" type="application/atom+xml">
@@ -88,14 +87,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2021/08/13/redis数据淘汰与内存回收/" title="" itemprop="url"></a>
+      <a href="/2021/08/16/rabbitmq与erlang安装/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
 		
   <p class="article-time">
-    <time datetime="2021-08-13T15:32:08.534Z" itemprop="datePublished"> Published 2021-08-13</time>
+    <time datetime="2021-08-15T17:15:36.684Z" itemprop="datePublished"> Published 2021-08-16</time>
     
   </p>
 </header>
@@ -104,29 +103,47 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">数据淘汰与内存回收</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rabbitmq%E4%B8%8Eerlang%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">rabbitmq与erlang安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">版本关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85Erlang-23-1"><span class="toc-number">3.</span> <span class="toc-text">下载安装Erlang 23.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEErlang%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">配置Erlang环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85RabbitMQ-3-8-9"><span class="toc-number">5.</span> <span class="toc-text">下载安装RabbitMQ 3.8.9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RabbitMQ-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">RabbitMQ 环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E7%94%A8RabbitMQ%E7%AE%A1%E7%90%86%E6%8F%92%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">启用RabbitMQ管理插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8RabbitMQ"><span class="toc-number">8.</span> <span class="toc-text">启动RabbitMQ</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="数据淘汰与内存回收"><a href="#数据淘汰与内存回收" class="headerlink" title="数据淘汰与内存回收"></a>数据淘汰与内存回收</h3><p>1.定时过期：到了key的过期时间，立即删除</p>
-<p>2.<strong>惰性过期</strong>：key被访问的时候才判断是否过期，过期则删除</p>
-<p>3.<strong>定时过期</strong>：每隔一段时间，清除一定数量的过期的key</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811192730434.png" alt="image-20210811192730434"></p>
-<p>maxmemory </p>
-<p>config set maxmemory 2GB</p>
-<p>lru:least recently used</p>
-<p>lfu:least frequently used</p>
-<p>实现一个lru的算法：</p>
-<p>链表+hash</p>
-<p>链表里面放元素，放满了就把最后面的元素给删除</p>
-<p>redis里面是每个key保持一个时间戳，key更新时从server.lruclock拿取时间</p>
-<p>采样的时候就删除一些数据</p>
-<p>lfu</p>
-<p>基于访问频率实现</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811195353107.png" alt="image-20210811195353107"></p>
-<p>log-factor越大，计数器增长越慢</p>
-<p>lfu-decay-time 一分钟减小1</p>
-  
+		<h2 id="rabbitmq与erlang安装"><a href="#rabbitmq与erlang安装" class="headerlink" title="rabbitmq与erlang安装"></a>rabbitmq与erlang安装</h2><h2 id="版本关系"><a href="#版本关系" class="headerlink" title="版本关系"></a>版本关系</h2><p>1、RabbitMQ依赖于Erlang，需要先安装Erlang<br>2、Erlang和RabbitMQ版本有对应关系<br><a target="_blank" rel="noopener" href="http://www.rabbitmq.com/which-erlang.html">http://www.rabbitmq.com/which-erlang.html</a></p>
+<p><img src="https://gper.club/server-img//mdEditors/2020/10/c6a793d8069c4ada8acb1a2e2bd3ae1b.png" alt="image.png"></p>
+<h2 id="下载安装Erlang-23-1"><a href="#下载安装Erlang-23-1" class="headerlink" title="下载安装Erlang 23.1"></a>下载安装Erlang 23.1</h2><p>如果下载太慢了，可以把地址贴到迅雷里面，下载到本机</p>
+<p><a target="_blank" rel="noopener" href="https://www.erlang.org/downloads/23.1">https://www.erlang.org/downloads/23.1</a><br>exe文件一路next就可以</p>
+<h2 id="配置Erlang环境变量"><a href="#配置Erlang环境变量" class="headerlink" title="配置Erlang环境变量"></a>配置Erlang环境变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERLANG_HOME=C:\Program Files\erl23.1</span><br></pre></td></tr></table></figure>
+
+<p>Path添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%ERLANG_HOME%\bin;</span><br></pre></td></tr></table></figure>
+
+<p>CMD输入 <code>erl</code>，输入能显示版本号则安装正确</p>
+<h2 id="下载安装RabbitMQ-3-8-9"><a href="#下载安装RabbitMQ-3-8-9" class="headerlink" title="下载安装RabbitMQ 3.8.9"></a>下载安装RabbitMQ 3.8.9</h2><p><a target="_blank" rel="noopener" href="http://www.rabbitmq.com/install-windows.html">http://www.rabbitmq.com/install-windows.html</a></p>
+<h2 id="RabbitMQ-环境变量"><a href="#RabbitMQ-环境变量" class="headerlink" title="RabbitMQ 环境变量"></a>RabbitMQ 环境变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RABBITMQ_SERVER=C:\Program Files\RabbitMQ Server\rabbitmq_server-3.8.9</span><br></pre></td></tr></table></figure>
+
+<p>在Path中加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%RABBITMQ_SERVER%\sbin;</span><br></pre></td></tr></table></figure>
+
+<h2 id="启用RabbitMQ管理插件"><a href="#启用RabbitMQ管理插件" class="headerlink" title="启用RabbitMQ管理插件"></a>启用RabbitMQ管理插件</h2><p>CMD中输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\RabbitMQ Server\rabbitmq_server-3.8.9\sbin\rabbitmq-plugins.bat&quot; enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动RabbitMQ"><a href="#启动RabbitMQ" class="headerlink" title="启动RabbitMQ"></a>启动RabbitMQ</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start RabbitMQ</span><br></pre></td></tr></table></figure>
+
+<p>关闭RabbitMQ</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop RabbitMQ</span><br></pre></td></tr></table></figure>
+
+<p>访问管理界面：<a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672/</a><br>默认用户名：guest<br>默认密码为：guest</p>
+<p>默认配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\你的用户名\AppData\Roaming\RabbitMQ\advanced.config</span><br></pre></td></tr></table></figure>
+
+<p>数据目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\用户名\AppData\Roaming\RabbitMQ\db\rabbit@用户名-mnesia</span><br></pre></td></tr></table></figure>
+
+<p>附：<br>如果遇到无法启动的问题，先尝试在控制面板 —— 服务 —— 中启动。<br>如果已经启动了，先服务里面停掉<br>或者尝试用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.\rabbitmq-server.bat stop</span><br><span class="line">.\rabbitmq-server.bat start</span><br></pre></td></tr></table></figure>
+
+<p>注意只能用CMD，不要用powershell</p>
+<p>如果要初始化RabbitMQ，移除全部数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-service stop</span><br><span class="line">rabbitmq-service remove</span><br><span class="line">rabbitmq-service install</span><br><span class="line">rabbitmq-service start</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -138,7 +155,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://yorkiiz.github.io/2021/08/13/redis%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/" data-title="yorkiiz" data-tsina="" class="share clearfix">
+	  <div data-url="https://yorkiiz.github.io/2021/08/16/rabbitmq%E4%B8%8Eerlang%E5%AE%89%E8%A3%85/" data-title="yorkiiz" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -152,7 +169,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2021/08/16/rabbit mq连接失败/" title="">
+ <a href="/2021/08/16/rabbitmq 工作模型/" title="">
   <strong>上一篇：</strong><br/>
   <span>
   (no title)</span>
@@ -161,7 +178,7 @@
 
 
 <div class="next">
-<a href="/2021/08/13/Redis lua脚本/"  title="">
+<a href="/2021/08/16/rabbit mq连接失败/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -180,7 +197,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E4%B8%8E%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">数据淘汰与内存回收</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rabbitmq%E4%B8%8Eerlang%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">rabbitmq与erlang安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">版本关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85Erlang-23-1"><span class="toc-number">3.</span> <span class="toc-text">下载安装Erlang 23.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEErlang%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">配置Erlang环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85RabbitMQ-3-8-9"><span class="toc-number">5.</span> <span class="toc-text">下载安装RabbitMQ 3.8.9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RabbitMQ-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">RabbitMQ 环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E7%94%A8RabbitMQ%E7%AE%A1%E7%90%86%E6%8F%92%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">启用RabbitMQ管理插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8RabbitMQ"><span class="toc-number">8.</span> <span class="toc-text">启动RabbitMQ</span></a></li></ol>
  
   </div>
 
