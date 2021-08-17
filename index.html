@@ -83,6 +83,89 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/17/rabbitmq操作指南/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-16T17:27:19.715Z" itemprop="datePublished"> Published 2021-08-17</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="rabbitmq操作指南"><a href="#rabbitmq操作指南" class="headerlink" title="rabbitmq操作指南"></a>rabbitmq操作指南</h3><h4 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h4><ul>
+<li>创建工厂（host，port，virtualhost，username，password）</li>
+<li>创建连接</li>
+<li>创建channel</li>
+<li>调用channel</li>
+</ul>
+<p>消费者方法：channel.basicConsume(,,)</p>
+<p>消费者创建mq配置：channel.exchangeDeclare；channel.queueDeclare；channel.queueBind</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.创建工厂</span></span><br><span class="line">ConnectionFactory factory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line"><span class="comment">// 连接IP</span></span><br><span class="line">factory.setHost(<span class="string">&quot;192.168.1.128&quot;</span>);</span><br><span class="line"><span class="comment">// 默认监听端口</span></span><br><span class="line">factory.setPort(<span class="number">5672</span>);</span><br><span class="line"><span class="comment">// 虚拟机</span></span><br><span class="line">factory.setVirtualHost(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置访问的用户</span></span><br><span class="line">factory.setUsername(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">factory.setPassword(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"><span class="comment">// 2.建立连接</span></span><br><span class="line">Connection conn = factory.newConnection();</span><br><span class="line"><span class="comment">// 3.创建消息通道</span></span><br><span class="line">Channel channel = conn.createChannel();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建消费者</span></span><br><span class="line">        Consumer consumer = <span class="keyword">new</span> DefaultConsumer(channel) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,</span></span></span><br><span class="line"><span class="params"><span class="function">                                       <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                String msg = <span class="keyword">new</span> String(body, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;Received message : &#x27;&quot;</span> + msg + <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;consumerTag : &quot;</span> + consumerTag );</span><br><span class="line">                System.out.println(<span class="string">&quot;deliveryTag : &quot;</span> + envelope.getDeliveryTag() );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.开始获取消息</span></span><br><span class="line"><span class="comment">// String queue, boolean autoAck, Consumer callback</span></span><br><span class="line">channel.basicConsume(QUEUE_NAME, <span class="keyword">true</span>, consumer);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h4><ul>
+<li>创建工厂</li>
+<li>创建连接</li>
+<li>创建通道</li>
+<li>发送消息</li>
+</ul>
+<p>生产者方法：channel.basicpublish(,,)</p>
+<p>生产者必须关闭通道和连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.创建工厂</span></span><br><span class="line">ConnectionFactory factory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line"><span class="comment">// 连接IP</span></span><br><span class="line">factory.setHost(<span class="string">&quot;192.168.1.128&quot;</span>);</span><br><span class="line"><span class="comment">// 连接端口</span></span><br><span class="line">factory.setPort(<span class="number">5672</span>);</span><br><span class="line"><span class="comment">// 虚拟机</span></span><br><span class="line">factory.setVirtualHost(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"><span class="comment">// 用户</span></span><br><span class="line">factory.setUsername(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">factory.setPassword(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.建立连接</span></span><br><span class="line">Connection conn = factory.newConnection();</span><br><span class="line"><span class="comment">// 3.创建消息通道</span></span><br><span class="line">Channel channel = conn.createChannel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.发送消息</span></span><br><span class="line">String msg = <span class="string">&quot;Hello world, Rabbit MQ&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// String exchange, String routingKey, BasicProperties props, byte[] body</span></span><br><span class="line">channel.basicPublish(EXCHANGE_NAME, <span class="string">&quot;gupao.best&quot;</span>, <span class="keyword">null</span>, msg.getBytes());</span><br><span class="line"></span><br><span class="line">channel.close();</span><br><span class="line">conn.close();</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="队列删除"><a href="#队列删除" class="headerlink" title="队列删除"></a>队列删除</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">channel.queueDelete</span><br><span class="line">channel.exchangeDelete</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="死信队列"><a href="#死信队列" class="headerlink" title="死信队列"></a>死信队列</h3><p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210817010215043.png" alt="image-20210817010215043"></p>
+<p>生产者抛消息给队列，队列没有消息，队列绑定了过期的exchange或者queue，消息里面有设置过期时间，过期后就把消息丢给对应的exchange或者queue</p>
+<p>启用插件</p>
+<p>rabbitmq-plugins enable rabbitmq_management</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/16/rabbitmq 工作模型/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -698,101 +781,6 @@
 <p>应用</p>
 <p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210809204202227.png" alt="image-20210809204202227"></p>
 <p>排行榜</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/05/maven是用来下载依赖和打包代码的工具/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-05T15:16:39.202Z" itemprop="datePublished"> Published 2021-08-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><strong>maven是用来下载依赖和打包代码的工具。</strong></p>
-<p><strong>本章主要简单介绍maven的下载以及配置</strong></p>
-<ul>
-<li>1.maven的下载</li>
-<li>2.环境变量的配置</li>
-<li>3.配置文件的配置</li>
-<li>4.idea设置</li>
-</ul>
-<p><strong>1.maven的下载与安装</strong></p>
-<p>maven可以直接从官网下载最新的版本。</p>
-<p>maven版本太高或者太低都会有兼容性问题，目前（2021/7）推荐使用3.3.*至3.6.*之间。其中binaries是编译好的文件，source是源代码，需要重新编译。推荐下载binaries版本。</p>
-<p><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.6.3/binaries/">https://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.6.3/binaries/</a></p>
-<p>下载后直接解压即可，我将目录移至了C:\Program Files下，如图</p>
-<p><img src="C:\Users\admin\Desktop\maven.JPG" alt="maven"></p>
-<p><strong>2.环境变量的配置</strong></p>
-<p>配置maven前，需要检查Java是否已经配置。</p>
-<p><img src="C:\Users\admin\Desktop\java.JPG" alt="java"></p>
-<p>如果没有的话，需要同时配置java和maven的环境变量</p>
-<p>如下图，在环境变量的系统变量中添加JAVA_HOME和MAVEN_HOME,分别为安装路径</p>
-<p><img src="C:\Users\admin\Desktop\home.JPG" alt="home"></p>
-<p>之后将java和maven的bin、路径分别添加到path中</p>
-<p><img src="C:\Users\admin\Desktop\bin.JPG" alt="bin"></p>
-<p>win10以下版本如下图</p>
-<p>![win7 maven](C:\Users\admin\Desktop\win7 maven.JPG)</p>
-<p>最后在cmd中输入mvn-v ，可以正常查到即可</p>
-<p><img src="C:\Users\admin\Desktop\maven版本.JPG" alt="maven版本"></p>
-<p>3.<strong>配置文件的配置</strong></p>
-<p><img src="C:\Users\admin\Desktop\maven.JPG" alt="maven"></p>
-<p>打开maven目录下的conf目录，</p>
-<p><img src="C:\Users\admin\Desktop\conf.JPG" alt="conf"></p>
-<p>打开settings.xml配置仓库的本地路径和远程仓库路径。</p>
-<p>如果不配置，那么远程仓库路径是国外路径，速度较慢；默认依赖下载路径为</p>
-<p>C:\Users\admin\.m2\repository</p>
-<p>C盘用户下的repository路径。</p>
-<p>在settings中添加</p>
-<p> <code>&lt;localRepository&gt;D:\repository&lt;/localRepository&gt;</code></p>
-<p>在mirrors中添加</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;alimaven&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun maven&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https:<span class="comment">//maven.aliyun.com/repository/central/&lt;/url&gt;</span></span><br><span class="line">&lt;/mirror&gt;</span><br></pre></td></tr></table></figure>
-
-<p>最后结果如图</p>
-<p><img src="C:\Users\admin\Desktop\settings.JPG" alt="settings"></p>
-<p><strong>4.idea设置</strong></p>
-<p>idea的设定分为项目设定和全局设定，如果要每次打开idea都使用配置好的maven，在打开界面选择</p>
-<p>Configure-&gt;Settings-&gt;Maven</p>
-<p>Maven home directory选择设定好的版本，local repository就会自动变更，如果没有自动变更说明上一步配置文件设置错了，至此maven就已经配置好了。</p>
-<p><img src="C:\Users\admin\Desktop\idea.JPG" alt="idea"></p>
 
         
         
