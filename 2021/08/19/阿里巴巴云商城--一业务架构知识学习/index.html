@@ -1,0 +1,519 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>yorkiiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="yorkiiz">
+    
+
+    
+    <meta name="description" content="阿里巴巴云商城–一业务架构知识学习架构1.云商城架构学习 2.基础数据管理，分布式文件管理 3.高性能门户首页构建 4.海量数据搜索实现 5.详情页实战 6.购物车、订单 7.分布式事务解决方案 8.微信支付 9.商品秒杀-数据处理 10.商品秒杀-热点数据实时发现系统 11.商品秒杀-程序隔离解决方案 12.官网鉴权 13.生产环境灾难控制 14.百万并发站点构建 业务架构环境电商模式 业务学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yorkiiz">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/08/19/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%E4%BA%91%E5%95%86%E5%9F%8E--%E4%B8%80%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="yorkiiz">
+<meta property="og:description" content="阿里巴巴云商城–一业务架构知识学习架构1.云商城架构学习 2.基础数据管理，分布式文件管理 3.高性能门户首页构建 4.海量数据搜索实现 5.详情页实战 6.购物车、订单 7.分布式事务解决方案 8.微信支付 9.商品秒杀-数据处理 10.商品秒杀-热点数据实时发现系统 11.商品秒杀-程序隔离解决方案 12.官网鉴权 13.生产环境灾难控制 14.百万并发站点构建 业务架构环境电商模式 业务学习">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210818225523479.png">
+<meta property="article:published_time" content="2021-08-18T16:59:12.697Z">
+<meta property="article:modified_time" content="2021-08-18T16:58:38.676Z">
+<meta property="article:author" content="yorkiiz">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210818225523479.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="yorkiiz" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="yorkiiz" title="yorkiiz"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="yorkiiz">yorkiiz</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yorkiiz.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/08/19/阿里巴巴云商城--一业务架构知识学习/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-18T16:59:12.697Z" itemprop="datePublished"> Published 2021-08-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%E4%BA%91%E5%95%86%E5%9F%8E%E2%80%93%E4%B8%80%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">阿里巴巴云商城–一业务架构知识学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%8E%AF%E5%A2%83"><span class="toc-number">1.2.</span> <span class="toc-text">业务架构环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E5%8A%9F%E8%83%BD"><span class="toc-number">1.3.</span> <span class="toc-text">业务功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">前后端分离开发模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#swagger%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">swagger的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%91%E5%95%86%E5%9F%8E%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.6.</span> <span class="toc-text">云商城技术架构讲解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%91%E5%95%86%E5%9F%8E%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84"><span class="toc-number">1.7.</span> <span class="toc-text">云商城技术架构</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="阿里巴巴云商城–一业务架构知识学习"><a href="#阿里巴巴云商城–一业务架构知识学习" class="headerlink" title="阿里巴巴云商城–一业务架构知识学习"></a>阿里巴巴云商城–一业务架构知识学习</h3><h4 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h4><p>1.云商城架构学习</p>
+<p>2.基础数据管理，分布式文件管理</p>
+<p>3.高性能门户首页构建</p>
+<p>4.海量数据搜索实现</p>
+<p>5.详情页实战</p>
+<p>6.购物车、订单</p>
+<p>7.分布式事务解决方案</p>
+<p>8.微信支付</p>
+<p>9.商品秒杀-数据处理</p>
+<p>10.商品秒杀-热点数据实时发现系统</p>
+<p>11.商品秒杀-程序隔离解决方案</p>
+<p>12.官网鉴权</p>
+<p>13.生产环境灾难控制</p>
+<p>14.百万并发站点构建</p>
+<h4 id="业务架构环境"><a href="#业务架构环境" class="headerlink" title="业务架构环境"></a>业务架构环境</h4><p>电商模式</p>
+<p>业务学习</p>
+<p>云商城架构</p>
+<p>云商城表结构</p>
+<p>搭建环境</p>
+<p>增删改查实现</p>
+<h4 id="业务功能"><a href="#业务功能" class="headerlink" title="业务功能"></a>业务功能</h4><p>商品增删改查</p>
+<p>参数增删改查</p>
+<p>订单增删改查</p>
+<p>列表分类，首页广告（考虑并发）</p>
+<p>动态搜索条件-es</p>
+<p>加入购物车</p>
+<p>用户登录</p>
+<p>选择指定商品，进行下单</p>
+<p>支付</p>
+<p>秒杀并发量</p>
+<p>秒杀商品流量控制</p>
+<h4 id="前后端分离开发模式"><a href="#前后端分离开发模式" class="headerlink" title="前后端分离开发模式"></a>前后端分离开发模式</h4><p>js-html-jsp</p>
+<p>vue，elementUI，nodeJS</p>
+<p>用swagger定义接口，开发restful接口，最后更改接口路径</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210818225523479.png" alt="image-20210818225523479"></p>
+<h4 id="swagger的使用"><a href="#swagger的使用" class="headerlink" title="swagger的使用"></a>swagger的使用</h4><h4 id="云商城技术架构讲解"><a href="#云商城技术架构讲解" class="headerlink" title="云商城技术架构讲解"></a>云商城技术架构讲解</h4><p>用户—lvs400w—ngnix5w—gateway网关（限流，建权）—后端微服务—分布式事务—数据库</p>
+<h4 id="云商城技术架构"><a href="#云商城技术架构" class="headerlink" title="云商城技术架构"></a>云商城技术架构</h4><p>客户端</p>
+<ul>
+<li>PC     H5    小程序    Android    IOS</li>
+</ul>
+<p>接入层</p>
+<ul>
+<li>心跳切换VIP： keepalived    keepalived    keepalived    keepalived</li>
+<li>四层负载：       LVS集群          LVS集群          LVS集群          LVS集群         </li>
+<li>七层负载：       Nginx集群      Nginx集群      Nginx集群      Nginx集群      </li>
+</ul>
+<p>网关层</p>
+<ul>
+<li><p>应用网关：         Gateway Filter Gateway Router Gateway鉴权 Gateway限流</p>
+<p>​                             水平拓展</p>
+</li>
+</ul>
+<p>服务层</p>
+<ul>
+<li>商品服务    订单服务    用户服务    搜索服务    秒杀服务</li>
+</ul>
+<p>​                               SpringCloud Alibaba技术栈</p>
+<p>数据同步</p>
+<ul>
+<li>ES搜索数据同步   热门数据同步  缓存数据同步  静态页同步   Proxy缓存同步</li>
+</ul>
+<p>服务治理</p>
+<ul>
+<li>服务主册    服务发现    统一配置    服务熔断    服务限流</li>
+</ul>
+<p>数据处理</p>
+<ul>
+<li><p>MySQL    Redis6.x高速缓存    Ceph分布式文件存储     ElasticSearch千亿级数据    Apache Druid千亿日志析</p>
+</li>
+<li><p>Kafka实时日志收集   RocketMQ统一消息处理    XXL-Job分布式 事务    MongoDB购物车永久保存</p>
+</li>
+</ul>
+<p>第三方接口</p>
+<ul>
+<li>短信通道    支付通道</li>
+</ul>
+<p>​    微信、阿里云短信平台</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://yorkiiz.github.io/2021/08/19/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%E4%BA%91%E5%95%86%E5%9F%8E--%E4%B8%80%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/" data-title="yorkiiz" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2021/08/17/rabbitmq操作指南/"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%E4%BA%91%E5%95%86%E5%9F%8E%E2%80%93%E4%B8%80%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">阿里巴巴云商城–一业务架构知识学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%8E%AF%E5%A2%83"><span class="toc-number">1.2.</span> <span class="toc-text">业务架构环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E5%8A%9F%E8%83%BD"><span class="toc-number">1.3.</span> <span class="toc-text">业务功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">前后端分离开发模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#swagger%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">swagger的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%91%E5%95%86%E5%9F%8E%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.6.</span> <span class="toc-text">云商城技术架构讲解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%91%E5%95%86%E5%9F%8E%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84"><span class="toc-number">1.7.</span> <span class="toc-text">云商城技术架构</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m yorkiiz in github. <br/>
+			天道酬勤.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="yorkiiz">yorkiiz</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
