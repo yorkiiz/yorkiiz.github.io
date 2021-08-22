@@ -83,6 +83,65 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/23/Nacos应用/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-22T16:43:43.340Z" itemprop="datePublished"> Published 2021-08-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="Nacos应用"><a href="#Nacos应用" class="headerlink" title="Nacos应用"></a>Nacos应用</h3><h4 id="nacos的基本应用"><a href="#nacos的基本应用" class="headerlink" title="nacos的基本应用"></a>nacos的基本应用</h4><p>统一配置管理，服务注册与发现</p>
+<p>服务注册中心如下图</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210822145229484.png" alt="image-20210822145229484"></p>
+<h4 id="下载与安装"><a href="#下载与安装" class="headerlink" title="下载与安装"></a>下载与安装</h4><p>下载nacos的安装包后，直接解压打开startup.cmd -m standalone（下载路径<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1186nmlqPGows9gUZKAx8Zw#list/path=%2F%EF%BC%8C%E5%AF%86%E7%A0%81%EF%BC%9Areset%EF%BC%89">https://pan.baidu.com/s/1186nmlqPGows9gUZKAx8Zw#list/path=%2F，密码：reset）</a></p>
+<p>安装方法与tomcat安装类似，直接解压即可使用</p>
+<p><a target="_blank" rel="noopener" href="http://localhost:8848/nacos/">http://localhost:8848/nacos/</a></p>
+<p>spring boot集成nacos</p>
+<p>配置中心</p>
+<p>nacos的整体架构</p>
+<p>nacos集群</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/19/阿里巴巴云商城--一业务架构知识学习/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -173,7 +232,16 @@
 <li>短信通道    支付通道</li>
 </ul>
 <p>​    微信、阿里云短信平台</p>
-
+<h4 id="云商城表结构分析"><a href="#云商城表结构分析" class="headerlink" title="云商城表结构分析"></a>云商城表结构分析</h4><p>集中式架构—-一个数据库</p>
+<p>分布式架构——对业务进行拆分</p>
+<p>订单明细</p>
+<p>秒杀表</p>
+<p>商品公共表</p>
+<p>商品单独表</p>
+<h4 id="项目开发准备环境"><a href="#项目开发准备环境" class="headerlink" title="项目开发准备环境"></a>项目开发准备环境</h4><p>redis cluster，ES，springcloud alibaba nacos，MySQL5.7，docker</p>
+<p><img src="C:\Users\admin\Desktop\阿里巴巴云商城--一业务架构知识学习\image-20210820000137587.png" alt="image-20210820000137587"></p>
+<p><img src="C:\Users\admin\Desktop\阿里巴巴云商城--一业务架构知识学习\image-20210820000339972.png" alt="image-20210820000339972"></p>
+<h4 id="项目结构详解"><a href="#项目结构详解" class="headerlink" title="项目结构详解"></a>项目结构详解</h4>
         
         
         <p class="article-more-link">
@@ -803,78 +871,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/10/redis GEO Spatial & Hyperloglogs/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-10T02:40:50.273Z" itemprop="datePublished"> Published 2021-08-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="redis-GEO-Spatial-amp-Hyperloglogs"><a href="#redis-GEO-Spatial-amp-Hyperloglogs" class="headerlink" title="redis GEO Spatial &amp; Hyperloglogs"></a>redis GEO Spatial &amp; Hyperloglogs</h3><p><strong>geo spatial</strong></p>
-<p>指令：</p>
-<p>geoadd citys 121.48 21.22 sh 113.01 28.19 cs</p>
-<p>geopos  citys cs</p>
-<p>geopos citys sh cs km</p>
-<p>georadius citys 113.01 28.19 5 km</p>
-<p>georadiusbymember citys cs 20 km</p>
-<p>添加两个城市的经纬度</p>
-<p>显示某个城市的经纬度</p>
-<p>计算两个城市的距离</p>
-<p>显示某个位置5km的城市</p>
-<p><strong>hyperloglogs</strong></p>
-<p>指令：</p>
-<p>pfadd log 1 2 3 4 5 6 7 8</p>
-<p>pfcount log</p>
-<p>pfadd qs a b c d e f g</p>
-<p>pfcount qs </p>
-<p>pfmerge result log qs</p>
-<p>应用：</p>
-<p>统计网站用户的访问量</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next&lt;span&gt;&lt;&#x2F;span&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next&lt;span&gt;&lt;&#x2F;span&gt;</a>
   </nav>
 
 </div>

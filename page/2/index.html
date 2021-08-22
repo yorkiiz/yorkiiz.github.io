@@ -83,6 +83,75 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/10/redis GEO Spatial & Hyperloglogs/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-10T02:40:50.273Z" itemprop="datePublished"> Published 2021-08-10</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="redis-GEO-Spatial-amp-Hyperloglogs"><a href="#redis-GEO-Spatial-amp-Hyperloglogs" class="headerlink" title="redis GEO Spatial &amp; Hyperloglogs"></a>redis GEO Spatial &amp; Hyperloglogs</h3><p><strong>geo spatial</strong></p>
+<p>指令：</p>
+<p>geoadd citys 121.48 21.22 sh 113.01 28.19 cs</p>
+<p>geopos  citys cs</p>
+<p>geopos citys sh cs km</p>
+<p>georadius citys 113.01 28.19 5 km</p>
+<p>georadiusbymember citys cs 20 km</p>
+<p>添加两个城市的经纬度</p>
+<p>显示某个城市的经纬度</p>
+<p>计算两个城市的距离</p>
+<p>显示某个位置5km的城市</p>
+<p><strong>hyperloglogs</strong></p>
+<p>指令：</p>
+<p>pfadd log 1 2 3 4 5 6 7 8</p>
+<p>pfcount log</p>
+<p>pfadd qs a b c d e f g</p>
+<p>pfcount qs </p>
+<p>pfmerge result log qs</p>
+<p>应用：</p>
+<p>统计网站用户的访问量</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/09/redis Zset/" title="redis zset" itemprop="url">redis zset</a>
   </h1>
   <p class="article-author">By
@@ -701,68 +770,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/05/spring自动装配/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-05T15:14:47.401Z" itemprop="datePublished"> Published 2021-08-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="spring自动装配"><a href="#spring自动装配" class="headerlink" title="spring自动装配"></a>spring自动装配</h3><p>IOC流程</p>
-<p>1.我们要把所有托管给spring管理的bean拿到，beandefination并且放到一个map里面</p>
-<p>2.getbean  实例化，进行属性注入，</p>
-<p>3.初始化bean，是否实现了beannameaware</p>
-<p>4.是否实现了beanpostprocessor类，调用postprocessbefore…</p>
-<p>5.初始化方法</p>
-<p>6.是否实现了beanpostprocessor类，调用postprocessafter… aop在这里实现</p>
-<p>入口在refresh（）里面</p>
-<h4 id="扫描"><a href="#扫描" class="headerlink" title="扫描"></a>扫描</h4><p>1.默认会扫描当前目录以及子目录下@service @component @controller  @repository</p>
-<h3 id="springboot手写starter"><a href="#springboot手写starter" class="headerlink" title="springboot手写starter"></a>springboot手写starter</h3><p>spring.factories</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/">&lt;span&gt;&lt;&#x2F;span&gt;Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&lt;span&gt;&lt;&#x2F;span&gt;Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next&lt;span&gt;&lt;&#x2F;span&gt;</a>
   </nav>
 
 </div>
