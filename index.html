@@ -83,6 +83,408 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/27/复习第二天/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-26T17:31:43.406Z" itemprop="datePublished"> Published 2021-08-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="复习第二天"><a href="#复习第二天" class="headerlink" title="复习第二天"></a>复习第二天</h3><p>1.mybatis的一二级缓存的区别</p>
+<p>一级-sqlsession</p>
+<p>二级-xml文件</p>
+<h4 id="全链路压测，接口压测"><a href="#全链路压测，接口压测" class="headerlink" title="全链路压测，接口压测"></a>全链路压测，接口压测</h4><p>jmeter</p>
+<h4 id="创建型"><a href="#创建型" class="headerlink" title="创建型"></a>创建型</h4><p>单例，工厂，建造者，原型</p>
+<h4 id="结构型"><a href="#结构型" class="headerlink" title="结构型"></a>结构型</h4><p>装饰，桥接，代理，组合</p>
+<h4 id="行为型"><a href="#行为型" class="headerlink" title="行为型"></a>行为型</h4><p>策略，委派，责任链</p>
+<h4 id="饿汉"><a href="#饿汉" class="headerlink" title="饿汉"></a>饿汉</h4><p>类加载的时候初始化，创建对象安全，内存浪费</p>
+<h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><p>不会浪费，怎么保证安全</p>
+<p>双重检查锁：外面的性能，里面的安全 dcl</p>
+<p>静态内部类：懒加载</p>
+<h4 id="注册式"><a href="#注册式" class="headerlink" title="注册式"></a>注册式</h4><p>枚举：饿汉</p>
+<p>容器式单例：</p>
+<p>反射，序列化，clone</p>
+<p>反射：重写私有构造方法</p>
+<p>序列化：重写readResoleve，返回单例</p>
+<h4 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h4><p>mybatis和aop</p>
+<p>1.类加载器，接口，invokehandler</p>
+<p>2.生产类通过反射并且需要实现被代理类的所有接口</p>
+<p>cglib</p>
+<p>生产多个fastclass，</p>
+<p>asm框架，fastclass机制调用</p>
+<p>jdk要有接口，cglib不是接口继承父类</p>
+<p>jdk更慢，cglib更快</p>
+<p>jdk需要public方法</p>
+<h4 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h4><p>1.集群</p>
+<p>2.降级</p>
+<p>3.拆分服务</p>
+<p>4.动态扩容</p>
+<p>5.限流</p>
+<p>6.熔断</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/08/27/代理模式/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-26T17:31:40.862Z" itemprop="datePublished"> Published 2021-08-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理模式是对对象的功能增强。比如前置通知和后置通知。</p>
+<p>代理模式分为两种，静态代理，动态代理；动态代理又分为jdk代理和cglib代理。</p>
+<h4 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h4><p>通常被代理对象实现同一个接口，代理对象通过接口动态构造了被代理对象，并且把被代理对象的接口方法做逐一的增强。</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210826205158.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface Car &#123;</span><br><span class="line"></span><br><span class="line">    void drive();</span><br><span class="line"></span><br><span class="line">    void stop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Benz implements Car &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void drive() &#123;</span><br><span class="line">        System.out.println(&quot;Benz car drive&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void stop() &#123;</span><br><span class="line">        System.out.println(&quot;Benz car stop&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Baoma implements Car &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void drive() &#123;</span><br><span class="line">        System.out.println(&quot;Baoma Car drive&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void stop() &#123;</span><br><span class="line">        System.out.println(&quot;Baoma car stop&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class Driver &#123;</span><br><span class="line">    private Car car;</span><br><span class="line">    public Driver(Car car)&#123;</span><br><span class="line">        this.car = car;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void drive()&#123;</span><br><span class="line">        before();</span><br><span class="line">        car.drive();</span><br><span class="line">        after();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void stop()&#123;</span><br><span class="line">        before();</span><br><span class="line">        car.stop();</span><br><span class="line">        after();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;**************&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;--------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Driver driver = new Driver(new Baoma());</span><br><span class="line">        driver.drive();</span><br><span class="line">        driver.stop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h4><p>动态代理分两种，jdk和cglib</p>
+<h4 id="jdk代理"><a href="#jdk代理" class="headerlink" title="jdk代理"></a>jdk代理</h4><p>jdk是jdk自带的代理，不需要任何依赖，对象需要实现同一个接口，代理对象需要实现InvocationHandler，依赖倒置原则，减少对代理类的依赖</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210827000052.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class JdkDriver implements InvocationHandler &#123;</span><br><span class="line">    private Car car;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        before();</span><br><span class="line">        Object result = method.invoke(this.car,args);</span><br><span class="line">        after();</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public  Car getInstance(Car car)&#123;</span><br><span class="line">        this.car = car;</span><br><span class="line">        Class&lt;?&gt; clazz = car.getClass();</span><br><span class="line">        return (Car)Proxy.newProxyInstance(clazz.getClassLoader(),clazz.getInterfaces(),this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;****************&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;-----------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        JdkDriver jdkDriver = new JdkDriver();</span><br><span class="line">        Car car = jdkDriver.getInstance(new Baoma());</span><br><span class="line">        car.drive();</span><br><span class="line">        car.speed();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反射代理类，实现InvocationHandler，实现ivoke方法，对类方法进行修饰；提供get方法，return jdk的proxy类的代理生成对象，需要classloader，interfaces，this；</p>
+<p>反射原理：动态生成源代码-&gt;输出到磁盘-&gt;编译成.class文件-&gt;加载到jvm中使用</p>
+<h4 id="Cglib代理"><a href="#Cglib代理" class="headerlink" title="Cglib代理"></a>Cglib代理</h4><p>不需要实现特定的接口，cglib代理类实现MethodInterceptor，提供intercept和get方法</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210827011445.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class Car &#123;</span><br><span class="line">    public void buy()&#123;</span><br><span class="line">        System.out.println(&quot;i want to buy a car&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class Mycglibproxy implements MethodInterceptor &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable &#123;</span><br><span class="line">        before();</span><br><span class="line">        Object obj = methodProxy.invokeSuper(o,objects);</span><br><span class="line">        after();</span><br><span class="line">        return obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Object getInstance(Class&lt;?&gt; clazz)&#123;</span><br><span class="line">        Enhancer enhancer = new Enhancer();</span><br><span class="line">        enhancer.setSuperclass(clazz);</span><br><span class="line">        enhancer.setCallback(this);</span><br><span class="line">        return enhancer.create();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;****************&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;-----------------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Car car = (Car) new  Mycglibproxy().getInstance(Car.class);</span><br><span class="line">        car.buy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>1.jdk代理基于反射，cglib使用的是asm框架，fastclass机制</p>
+<p>2.jdk一定要有接口，cglib不能实现final类</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/08/24/redis list/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-23T18:12:53.512Z" itemprop="datePublished"> Published 2021-08-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="redis-list"><a href="#redis-list" class="headerlink" title="redis list"></a>redis list</h3><p>指令：</p>
+<p>flushall 删库跑路</p>
+<p>lpush queue c</p>
+<p>lpush queue d e</p>
+<p>rpush queue f g</p>
+<p>lpop queue </p>
+<p>rpop queue</p>
+<p>lindex queue 0          单个索引获取数据</p>
+<p>lrange queue 0 -1     获取所有数据</p>
+<p><strong>特点：</strong></p>
+<p>数据可以重复</p>
+<p>简单的消息队列：</p>
+<p>rpush lpop</p>
+<p>blpop key1 timeput</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/08/24/redis hash/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-23T18:12:53.511Z" itemprop="datePublished"> Published 2021-08-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="redis-hash"><a href="#redis-hash" class="headerlink" title="redis hash"></a>redis hash</h3><h4 id="1-1string来存储多个键值对"><a href="#1-1string来存储多个键值对" class="headerlink" title="1.1string来存储多个键值对"></a>1.1string来存储多个键值对</h4><p>String 里面一个值只能对应一个对象</p>
+<p>hash里面一个</p>
+<p>利用key为冒号分层的效果，达到目的</p>
+<p>set food:meat:beaf  1</p>
+<p>set food:meat:pork  2</p>
+<p>keys food*</p>
+<p>String来存储多个键值对</p>
+<p>mset批量set</p>
+<p>第一级表名：第二级主键的值：第三级字段的名称   字段的内容</p>
+<p>key不同导致不好</p>
+<h4 id="hash来存储对个键值对"><a href="#hash来存储对个键值对" class="headerlink" title="hash来存储对个键值对"></a>hash来存储对个键值对</h4><p>hash</p>
+<p>key–field–value</p>
+<p><strong>好处：</strong></p>
+<p>1.节省空间—–不用冒号，用聚集</p>
+<p>2.减少命名冲突—用一个key</p>
+<p>3.减少资源消耗—不用mget，用hget，只用一个key，不用多个key</p>
+<p><strong>坏处：</strong></p>
+<p>1.过期只能对key，不能对field</p>
+<p>2.bit位</p>
+<p>3.每个field 500M，有500 field，hash里面集群只能对key取模导致不能对单个key分布式</p>
+<p><strong>指令：</strong></p>
+<p>hset h1 f 6</p>
+<p>hmset h1 a 1 b 2 c 3 d 4</p>
+<p>hget h1 a</p>
+<p>hmget h1 a b c d</p>
+<p>hkeys h1</p>
+<p>hvals h1</p>
+<p>hgetall h1</p>
+<p>hget exists h1</p>
+<p>hdel h1 f</p>
+<p>hlen h1</p>
+<p>hincrby h1 a 10</p>
+<p>hincrby h1 a -10</p>
+<p><strong>购物车：</strong></p>
+<p>key:用户id</p>
+<p>field：商品id</p>
+<p>value：商品数量</p>
+<p>删除 hdel</p>
+<p>全选 hgetall</p>
+<p>商品数量 hlen</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/08/24/springboot自动装配/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-23T18:12:00.700Z" itemprop="datePublished"> Published 2021-08-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="springboot自动装配"><a href="#springboot自动装配" class="headerlink" title="springboot自动装配"></a>springboot自动装配</h3><h4 id="1-IOC流程"><a href="#1-IOC流程" class="headerlink" title="1.IOC流程"></a>1.IOC流程</h4><p>1.把所有要托管的spring管理的bean拿到，beanDefinition，并且放到beanDefinitionMap</p>
+<p>2.bean实例化，进行属性注入</p>
+<p>3.初始化Bean，是否实现BeanNameAware</p>
+<p>4.是否实现了BeanPostProcessor类，调用postProcessBeforeIn</p>
+<p>5.初始化方法</p>
+<p>6.是否实现了BeanPostProcessor类，调用postProcessAfterIn。。。。AOP实现</p>
+<p>入口在哪里</p>
+<p>refresh（）</p>
+<p>扫描</p>
+<p>1.默认会扫描当前目录及子目录下@Service @Component @Controller @Repository @Bean @Configuration</p>
+<p>2.加注解@ComponentScans（{“com.huihui.demo”,”com.huihui.boot”}）,或@Import（ClassB.class）</p>
+<p>3.importselector selectimport</p>
+<p>4.xml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SpringApplication.run---&gt;refreshContext---refresh---this.finishBeanFactoryInitialization(beanFactory)---eanFactory.preInstantiateSingletons()---getBean---doGetBean---createBean---doCreateBean</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void refresh() throws BeansException, IllegalStateException &#123;</span><br><span class="line">        synchronized(this.startupShutdownMonitor) &#123;</span><br><span class="line">            this.prepareRefresh();</span><br><span class="line">            ConfigurableListableBeanFactory beanFactory = this.obtainFreshBeanFactory();</span><br><span class="line">            this.prepareBeanFactory(beanFactory);</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                this.postProcessBeanFactory(beanFactory);</span><br><span class="line">                this.invokeBeanFactoryPostProcessors(beanFactory);</span><br><span class="line">                this.registerBeanPostProcessors(beanFactory);</span><br><span class="line">                this.initMessageSource();</span><br><span class="line">                this.initApplicationEventMulticaster();</span><br><span class="line">                this.onRefresh();</span><br><span class="line">                this.registerListeners();</span><br><span class="line">                this.finishBeanFactoryInitialization(beanFactory);//getbean的方法</span><br><span class="line">                this.finishRefresh();</span><br><span class="line">            &#125; catch (BeansException var9) &#123;</span><br><span class="line">                if (this.logger.isWarnEnabled()) &#123;</span><br><span class="line">                    this.logger.warn(&quot;Exception encountered during context initialization - cancelling refresh attempt: &quot; + var9);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                this.destroyBeans();</span><br><span class="line">                this.cancelRefresh(var9);</span><br><span class="line">                throw var9;</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                this.resetCommonCaches();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">protected Object doCreateBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) throws BeanCreationException &#123;</span><br><span class="line">    BeanWrapper instanceWrapper = null;</span><br><span class="line">    if (mbd.isSingleton()) &#123;</span><br><span class="line">        //2.创建实例</span><br><span class="line">        instanceWrapper = (BeanWrapper)this.factoryBeanInstanceCache.remove(beanName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (instanceWrapper == null) &#123;</span><br><span class="line">        instanceWrapper = this.createBeanInstance(beanName, mbd, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object bean = instanceWrapper.getWrappedInstance();</span><br><span class="line">    Class&lt;?&gt; beanType = instanceWrapper.getWrappedClass();</span><br><span class="line">    if (beanType != NullBean.class) &#123;</span><br><span class="line">        mbd.resolvedTargetType = beanType;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    synchronized(mbd.postProcessingLock) &#123;</span><br><span class="line">        if (!mbd.postProcessed) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                this.applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);</span><br><span class="line">            &#125; catch (Throwable var17) &#123;</span><br><span class="line">                throw new BeanCreationException(mbd.getResourceDescription(), beanName, &quot;Post-processing of merged bean definition failed&quot;, var17);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            mbd.postProcessed = true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    boolean earlySingletonExposure = mbd.isSingleton() &amp;&amp; this.allowCircularReferences &amp;&amp; this.isSingletonCurrentlyInCreation(beanName);</span><br><span class="line">    if (earlySingletonExposure) &#123;</span><br><span class="line">        if (this.logger.isTraceEnabled()) &#123;</span><br><span class="line">            this.logger.trace(&quot;Eagerly caching bean &#x27;&quot; + beanName + &quot;&#x27; to allow for resolving potential circular references&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        this.addSingletonFactory(beanName, () -&gt; &#123;</span><br><span class="line">            return this.getEarlyBeanReference(beanName, mbd, bean);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object exposedObject = bean;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        //2.属性注入，DI</span><br><span class="line">        this.populateBean(beanName, mbd, instanceWrapper);</span><br><span class="line">        //3.初始化Bean，是否实现BeanNameAware</span><br><span class="line">        exposedObject = this.initializeBean(beanName, exposedObject, mbd);</span><br><span class="line">    &#125; catch (Throwable var18) &#123;</span><br><span class="line">        if (var18 instanceof BeanCreationException &amp;&amp; beanName.equals(((BeanCreationException)var18).getBeanName())) &#123;</span><br><span class="line">            throw (BeanCreationException)var18;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        throw new BeanCreationException(mbd.getResourceDescription(), beanName, &quot;Initialization of bean failed&quot;, var18);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (earlySingletonExposure) &#123;</span><br><span class="line">        Object earlySingletonReference = this.getSingleton(beanName, false);</span><br><span class="line">        if (earlySingletonReference != null) &#123;</span><br><span class="line">            if (exposedObject == bean) &#123;</span><br><span class="line">                exposedObject = earlySingletonReference;</span><br><span class="line">            &#125; else if (!this.allowRawInjectionDespiteWrapping &amp;&amp; this.hasDependentBean(beanName)) &#123;</span><br><span class="line">                String[] dependentBeans = this.getDependentBeans(beanName);</span><br><span class="line">                Set&lt;String&gt; actualDependentBeans = new LinkedHashSet(dependentBeans.length);</span><br><span class="line">                String[] var12 = dependentBeans;</span><br><span class="line">                int var13 = dependentBeans.length;</span><br><span class="line"></span><br><span class="line">                for(int var14 = 0; var14 &lt; var13; ++var14) &#123;</span><br><span class="line">                    String dependentBean = var12[var14];</span><br><span class="line">                    if (!this.removeSingletonIfCreatedForTypeCheckOnly(dependentBean)) &#123;</span><br><span class="line">                        actualDependentBeans.add(dependentBean);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (!actualDependentBeans.isEmpty()) &#123;</span><br><span class="line">                    throw new BeanCurrentlyInCreationException(beanName, &quot;Bean with name &#x27;&quot; + beanName + &quot;&#x27; has been injected into other beans [&quot; + StringUtils.collectionToCommaDelimitedString(actualDependentBeans) + &quot;] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching - consider using &#x27;getBeanNamesForType&#x27; with the &#x27;allowEagerInit&#x27; flag turned off, for example.&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        this.registerDisposableBeanIfNecessary(beanName, bean, mbd);</span><br><span class="line">        return exposedObject;</span><br><span class="line">    &#125; catch (BeanDefinitionValidationException var16) &#123;</span><br><span class="line">        throw new BeanCreationException(mbd.getResourceDescription(), beanName, &quot;Invalid destruction signature&quot;, var16);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">protected Object initializeBean(String beanName, Object bean, @Nullable RootBeanDefinition mbd) &#123;</span><br><span class="line">    if (System.getSecurityManager() != null) &#123;</span><br><span class="line">        AccessController.doPrivileged(() -&gt; &#123;</span><br><span class="line">            //3.初始化Bean，是否实现BeanNameAware</span><br><span class="line">            this.invokeAwareMethods(beanName, bean);</span><br><span class="line">            return null;</span><br><span class="line">        &#125;, this.getAccessControlContext());</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        this.invokeAwareMethods(beanName, bean);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object wrappedBean = bean;</span><br><span class="line">    if (mbd == null || !mbd.isSynthetic()) &#123;</span><br><span class="line">       4.是否实现了BeanPostProcessor类，调用postProcessBeforeIn</span><br><span class="line">        wrappedBean = this.applyBeanPostProcessorsBeforeInitialization(bean, beanName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        //5.初始化方法</span><br><span class="line">        this.invokeInitMethods(beanName, wrappedBean, mbd);</span><br><span class="line">    &#125; catch (Throwable var6) &#123;</span><br><span class="line">        throw new BeanCreationException(mbd != null ? mbd.getResourceDescription() : null, beanName, &quot;Invocation of init method failed&quot;, var6);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (mbd == null || !mbd.isSynthetic()) &#123;</span><br><span class="line">       //6.是否实现了BeanPostProcessor类，调用postProcessAfterIn。。。。AOP实现</span><br><span class="line">        wrappedBean = this.applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return wrappedBean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-手写start组件"><a href="#2-手写start组件" class="headerlink" title="2.手写start组件"></a>2.手写start组件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication-&gt;@EnableAutoConfiguration-&gt;@Import(&#123;AutoConfigurationImportSelector.class&#125;)-&gt;DeferredImportSelector-&gt;ImportSelector-&gt;selectImports-&gt;this.getAutoConfigurationEntry-&gt;this.getCandidateConfigurations-&gt; SpringFactoriesLoader.loadFactoryNames-&gt;loadSpringFactories-&gt;classLoader.getResources(&quot;META-INF/spring.factories&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>META-INF/spring</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210824013535315.png" alt="image-20210824013535315"></p>
+<p>1.写一个自动装配的类</p>
+<p>PersonTest</p>
+<p>2.META-INF/spring.factories 添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">com.example.start001.start.PersonTest</span><br></pre></td></tr></table></figure>
+
+<p>3.pom文件里面build删除，防止maven冲突</p>
+<p>4.clean,package,install</p>
+<p>5.其他项目引入当前项目生产的maven包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;groupId&gt;com.example.start001&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;start&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/23/Nacos应用/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -484,364 +886,6 @@
 <p>注意只能用CMD，不要用powershell</p>
 <p>如果要初始化RabbitMQ，移除全部数据：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-service stop</span><br><span class="line">rabbitmq-service remove</span><br><span class="line">rabbitmq-service install</span><br><span class="line">rabbitmq-service start</span><br></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/16/rabbit mq连接失败/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-15T17:15:36.679Z" itemprop="datePublished"> Published 2021-08-16</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="rabbit-mq连接失败"><a href="#rabbit-mq连接失败" class="headerlink" title="rabbit mq连接失败"></a>rabbit mq连接失败</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ConnectionFactory factory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line"><span class="comment">// 连接IP</span></span><br><span class="line">factory.setHost(<span class="string">&quot;192.168.1.128&quot;</span>);</span><br><span class="line"><span class="comment">// 默认监听端口</span></span><br><span class="line">factory.setPort(<span class="number">15672</span>);</span><br><span class="line"><span class="comment">// 虚拟机</span></span><br><span class="line">factory.setVirtualHost(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置访问的用户</span></span><br><span class="line">factory.setUsername(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">factory.setPassword(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"><span class="comment">// 建立连接</span></span><br><span class="line">Connection conn = factory.newConnection();</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;C:\Program Files\java\jdk1.8.0_91\bin\java.exe&quot;</span> <span class="string">&quot;-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\lib\idea_rt.jar=54668:C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\bin&quot;</span> -Dfile.encoding=UTF-<span class="number">8</span> -classpath <span class="string">&quot;C:\Program Files\java\jdk1.8.0_91\jre\lib\charsets.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\deploy.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\access-bridge-64.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\cldrdata.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\dnsns.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\jaccess.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\jfxrt.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\localedata.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\nashorn.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunec.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunjce_provider.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunmscapi.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\sunpkcs11.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\ext\zipfs.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\javaws.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jce.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jfr.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jfxswt.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\jsse.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\management-agent.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\plugin.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\resources.jar;C:\Program Files\java\jdk1.8.0_91\jre\lib\rt.jar;D:\study\mq\gupaoedu-vip-rabbitmq-javaapi\target\classes;D:\repository\com\rabbitmq\amqp-client\5.6.0\amqp-client-5.6.0.jar;D:\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;D:\repository\org\slf4j\slf4j-simple\1.7.25\slf4j-simple-1.7.25.jar&quot;</span> com.gupaoedu.simple.MyConsumer</span><br><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.io.IOException</span><br><span class="line">	at com.rabbitmq.client.impl.AMQChannel.wrap(AMQChannel.java:<span class="number">129</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQChannel.wrap(AMQChannel.java:<span class="number">125</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQConnection.start(AMQConnection.java:<span class="number">375</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.recovery.RecoveryAwareAMQConnectionFactory.newConnection(RecoveryAwareAMQConnectionFactory.java:<span class="number">64</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.recovery.AutorecoveringConnection.init(AutorecoveringConnection.java:<span class="number">156</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1106</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1063</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1021</span>)</span><br><span class="line">	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:<span class="number">1182</span>)</span><br><span class="line">	at com.gupaoedu.simple.MyConsumer.main(MyConsumer.java:<span class="number">29</span>)</span><br><span class="line">Caused by: com.rabbitmq.client.ShutdownSignalException: connection error</span><br><span class="line">	at com.rabbitmq.utility.ValueOrException.getValue(ValueOrException.java:<span class="number">66</span>)</span><br><span class="line">	at com.rabbitmq.utility.BlockingValueOrException.uninterruptibleGetValue(BlockingValueOrException.java:<span class="number">36</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQChannel$BlockingRpcContinuation.getReply(AMQChannel.java:<span class="number">502</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQConnection.start(AMQConnection.java:<span class="number">317</span>)</span><br><span class="line">	... <span class="number">7</span> more</span><br><span class="line">Caused by: java.io.EOFException</span><br><span class="line">	at java.io.DataInputStream.readUnsignedByte(DataInputStream.java:<span class="number">290</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:<span class="number">91</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:<span class="number">164</span>)</span><br><span class="line">	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:<span class="number">598</span>)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="代码如1，报错如2"><a href="#代码如1，报错如2" class="headerlink" title="代码如1，报错如2"></a>代码如1，报错如2</h4><p>报错原因，rabbit mq的15672为管理端口，使用5672端口即可。</p>
-<p>某些情况用15672端口也行</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/13/redis数据淘汰与内存回收/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-13T15:32:08.534Z" itemprop="datePublished"> Published 2021-08-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="数据淘汰与内存回收"><a href="#数据淘汰与内存回收" class="headerlink" title="数据淘汰与内存回收"></a>数据淘汰与内存回收</h3><p>1.定时过期：到了key的过期时间，立即删除</p>
-<p>2.<strong>惰性过期</strong>：key被访问的时候才判断是否过期，过期则删除</p>
-<p>3.<strong>定时过期</strong>：每隔一段时间，清除一定数量的过期的key</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811192730434.png" alt="image-20210811192730434"></p>
-<p>maxmemory </p>
-<p>config set maxmemory 2GB</p>
-<p>lru:least recently used</p>
-<p>lfu:least frequently used</p>
-<p>实现一个lru的算法：</p>
-<p>链表+hash</p>
-<p>链表里面放元素，放满了就把最后面的元素给删除</p>
-<p>redis里面是每个key保持一个时间戳，key更新时从server.lruclock拿取时间</p>
-<p>采样的时候就删除一些数据</p>
-<p>lfu</p>
-<p>基于访问频率实现</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210811195353107.png" alt="image-20210811195353107"></p>
-<p>log-factor越大，计数器增长越慢</p>
-<p>lfu-decay-time 一分钟减小1</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/13/Redis lua脚本/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-13T15:32:06.310Z" itemprop="datePublished"> Published 2021-08-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="Redis-lua脚本"><a href="#Redis-lua脚本" class="headerlink" title="Redis lua脚本"></a>Redis lua脚本</h3><p>指令：</p>
-<p>eval lua-script key-num</p>
-<p>redis.call(command,key[param1,param2])</p>
-<p>eval “redis.call(‘set’,KEYS[1],ARGV[1])” 1 qs 2673</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/13/redis的数据类型/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-13T15:31:45.475Z" itemprop="datePublished"> Published 2021-08-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="redis的数据类型"><a href="#redis的数据类型" class="headerlink" title="redis的数据类型"></a>redis的数据类型</h3><h4 id="目前官网一共有8中"><a href="#目前官网一共有8中" class="headerlink" title="目前官网一共有8中"></a>目前官网一共有8中</h4><p>strings, hashes, lists, sets, sorted sets </p>
-<p>hyperloglogs, geospatial indexes, and streams</p>
-<p>字符串</p>
-<p>String</p>
-<p>int</p>
-<p>float</p>
-<h4 id="操作指令"><a href="#操作指令" class="headerlink" title="操作指令"></a>操作指令</h4><h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><p>指令</p>
-<p>mset yongjie 1234 qingshan 666 EX 10   10秒过期</p>
-<p>mset yongjie 1234 qingshan 666 PX 10    10毫秒过期</p>
-<p>mset yongjie 1234 qingshan 666 NX 10     不存在才成功</p>
-<p>mset yongjie 1234 qingshan 666 XX 10     存在才成功</p>
-<p>mget yongjie qingshan</p>
-<p>strlen qingshan</p>
-<p>append qingshang good</p>
-<p>getranger qingshan 0 8</p>
-<p>incr qingshan</p>
-<p>incrby qingshan 100</p>
-<p>decr qingshan</p>
-<p>decrby qingshan 100</p>
-<p>set f 2.6</p>
-<p>incrbyfloat f 7.3</p>
-<p>del f</p>
-<p>批量赋值可以保证原子性</p>
-<p>string应用场景</p>
-<p>1.缓存</p>
-<p>2.分布式session</p>
-<p>3.set NX EX分布式锁</p>
-<p>4.incr全局ID</p>
-<p>5.incr计数器</p>
-<p>6.incr限流</p>
-<p>7.位操作统计</p>
-<h4 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h4><table>
-<thead>
-<tr>
-<th>id</th>
-<th>sno</th>
-<th>sname</th>
-<th>company</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>16666</td>
-<td>张岩</td>
-<td>腾讯</td>
-</tr>
-<tr>
-<td>2</td>
-<td>17777</td>
-<td>王芳</td>
-<td>百度</td>
-</tr>
-<tr>
-<td>3</td>
-<td>18888</td>
-<td>刘厉</td>
-<td>阿里</td>
-</tr>
-</tbody></table>
-<p>mset student:1:sno 1666 student:1:sname 张岩</p>
-<p>hash里面value只能存储字符串</p>
-<p>hash和string区别：</p>
-<ul>
-<li><p>用冒号去分层，减少内存的消耗</p>
-</li>
-<li><p>减少命名的冲突</p>
-</li>
-<li><p>一次取多个，减少资源的消耗</p>
-</li>
-</ul>
-<p>hash是按照key取模去做集群，如果一个key特别大，没办法分流</p>
-<p>指令：</p>
-<p>hset h1 f 6</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/13/rabbitmq安装/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-13T15:31:24.876Z" itemprop="datePublished"> Published 2021-08-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="rabbitmq安装"><a href="#rabbitmq安装" class="headerlink" title="rabbitmq安装"></a>rabbitmq安装</h3><p><strong>安装</strong></p>
-<p><a target="_blank" rel="noopener" href="https://gper.club/articles/7e7e7f7ff4g56gceg6e">https://gper.club/articles/7e7e7f7ff4g56gceg6e</a></p>
-<p>erlang版本与rabbitmq验证</p>
-<p><a target="_blank" rel="noopener" href="http://www.rabbitmq.com/which-erlang.html">http://www.rabbitmq.com/which-erlang.html</a></p>
-<p><strong>安装erlang</strong></p>
-<p><strong>验证erlang：erl</strong></p>
-<p><strong>安装rabbitmq</strong></p>
-<p><strong>配置环境变量</strong></p>
-<p><strong>启动rabbitmq</strong></p>
-<p><strong>添加其他用户</strong></p>
-<p><strong>启用管理插件</strong></p>
-<p><strong>端口15627</strong></p>
-
         
         
         <p class="article-more-link">
