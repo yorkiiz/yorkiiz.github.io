@@ -83,6 +83,91 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/16/rabbitmq与erlang安装/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-15T17:15:36.684Z" itemprop="datePublished"> Published 2021-08-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="rabbitmq与erlang安装"><a href="#rabbitmq与erlang安装" class="headerlink" title="rabbitmq与erlang安装"></a>rabbitmq与erlang安装</h2><h2 id="版本关系"><a href="#版本关系" class="headerlink" title="版本关系"></a>版本关系</h2><p>1、RabbitMQ依赖于Erlang，需要先安装Erlang<br>2、Erlang和RabbitMQ版本有对应关系<br><a target="_blank" rel="noopener" href="http://www.rabbitmq.com/which-erlang.html">http://www.rabbitmq.com/which-erlang.html</a></p>
+<p><img src="https://gper.club/server-img//mdEditors/2020/10/c6a793d8069c4ada8acb1a2e2bd3ae1b.png" alt="image.png"></p>
+<h2 id="下载安装Erlang-23-1"><a href="#下载安装Erlang-23-1" class="headerlink" title="下载安装Erlang 23.1"></a>下载安装Erlang 23.1</h2><p>如果下载太慢了，可以把地址贴到迅雷里面，下载到本机</p>
+<p><a target="_blank" rel="noopener" href="https://www.erlang.org/downloads/23.1">https://www.erlang.org/downloads/23.1</a><br>exe文件一路next就可以</p>
+<h2 id="配置Erlang环境变量"><a href="#配置Erlang环境变量" class="headerlink" title="配置Erlang环境变量"></a>配置Erlang环境变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERLANG_HOME=C:\Program Files\erl23.1</span><br></pre></td></tr></table></figure>
+
+<p>Path添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%ERLANG_HOME%\bin;</span><br></pre></td></tr></table></figure>
+
+<p>CMD输入 <code>erl</code>，输入能显示版本号则安装正确</p>
+<h2 id="下载安装RabbitMQ-3-8-9"><a href="#下载安装RabbitMQ-3-8-9" class="headerlink" title="下载安装RabbitMQ 3.8.9"></a>下载安装RabbitMQ 3.8.9</h2><p><a target="_blank" rel="noopener" href="http://www.rabbitmq.com/install-windows.html">http://www.rabbitmq.com/install-windows.html</a></p>
+<h2 id="RabbitMQ-环境变量"><a href="#RabbitMQ-环境变量" class="headerlink" title="RabbitMQ 环境变量"></a>RabbitMQ 环境变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RABBITMQ_SERVER=C:\Program Files\RabbitMQ Server\rabbitmq_server-3.8.9</span><br></pre></td></tr></table></figure>
+
+<p>在Path中加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%RABBITMQ_SERVER%\sbin;</span><br></pre></td></tr></table></figure>
+
+<h2 id="启用RabbitMQ管理插件"><a href="#启用RabbitMQ管理插件" class="headerlink" title="启用RabbitMQ管理插件"></a>启用RabbitMQ管理插件</h2><p>CMD中输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\RabbitMQ Server\rabbitmq_server-3.8.9\sbin\rabbitmq-plugins.bat&quot; enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动RabbitMQ"><a href="#启动RabbitMQ" class="headerlink" title="启动RabbitMQ"></a>启动RabbitMQ</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start RabbitMQ</span><br></pre></td></tr></table></figure>
+
+<p>关闭RabbitMQ</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop RabbitMQ</span><br></pre></td></tr></table></figure>
+
+<p>访问管理界面：<a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672/</a><br>默认用户名：guest<br>默认密码为：guest</p>
+<p>默认配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\你的用户名\AppData\Roaming\RabbitMQ\advanced.config</span><br></pre></td></tr></table></figure>
+
+<p>数据目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\用户名\AppData\Roaming\RabbitMQ\db\rabbit@用户名-mnesia</span><br></pre></td></tr></table></figure>
+
+<p>附：<br>如果遇到无法启动的问题，先尝试在控制面板 —— 服务 —— 中启动。<br>如果已经启动了，先服务里面停掉<br>或者尝试用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.\rabbitmq-server.bat stop</span><br><span class="line">.\rabbitmq-server.bat start</span><br></pre></td></tr></table></figure>
+
+<p>注意只能用CMD，不要用powershell</p>
+<p>如果要初始化RabbitMQ，移除全部数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-service stop</span><br><span class="line">rabbitmq-service remove</span><br><span class="line">rabbitmq-service install</span><br><span class="line">rabbitmq-service start</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/16/rabbit mq连接失败/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -690,62 +775,6 @@
 <p>非公平锁的体现，前线程执行完以后，unpark的线程和新来的线程同时抢占锁</p>
 <p>公平锁和非公平锁的区别：</p>
 <p>只能队列里面的抢占，可以队列里面的线程和刚进来的线程</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/05/redis配置/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-05T15:14:47.438Z" itemprop="datePublished"> Published 2021-08-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="redis配置"><a href="#redis配置" class="headerlink" title="redis配置"></a>redis配置</h4><ol>
-<li>查看6379（或者自定义redis端口）时候打开<ul>
-<li>firewall-cmd –query-port=6379/tcp 如果返回no则端口没有开启</li>
-<li>firewall-cmd –add-port=6379/tcp （加 –permanent 永久有效），返回success说明开启成功</li>
-</ul>
-</li>
-</ol>
 
         
         
