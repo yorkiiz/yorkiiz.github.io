@@ -83,6 +83,96 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/09/05/多线程的复习/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-09-05T14:50:29.039Z" itemprop="datePublished"> Published 2021-09-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="多线程的复习"><a href="#多线程的复习" class="headerlink" title="多线程的复习"></a>多线程的复习</h3><h4 id="hashmap与chm"><a href="#hashmap与chm" class="headerlink" title="hashmap与chm"></a>hashmap与chm</h4><p>扩容因子 0.75</p>
+<p>数组+链表  或者数组+红黑树</p>
+<p>什么时候转红黑树？</p>
+<p>1.链表长度大于8的时候</p>
+<p>2.数组长度大于64</p>
+<p>红黑树在节点小于6时会变成链表</p>
+<p>chm</p>
+<p>cas、synchronize</p>
+<p>1.7链表+数组    头插法-死循环</p>
+<p>1.8链表+数组+红黑树 64扩容   尾插法</p>
+<p>jdk1.8取消了重复锁，使用synchronize</p>
+<h4 id="reentranlock"><a href="#reentranlock" class="headerlink" title="reentranlock"></a>reentranlock</h4><p>1.aqs里面有一个volitale修饰的stat字段，标记有没有抢到锁，如果大于1，那么就有，并且代表重复次数</p>
+<p>2.其他获取锁的线程，获取锁失败，那么就会进去aqs里面的一个等待队列</p>
+<p>3.假如等待队列后，自旋获取锁，如果获取不到锁，进行park</p>
+<p>4.如果获取到锁的线程执行完毕，必须手动调用unlock，unlock把state赋值为0，这是所有线程重新来抢占锁</p>
+<p>5.对新的</p>
+<h4 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h4><p>1.作用，是什么</p>
+<p>2.那些数据结构，比如state，node clh队列</p>
+<p>3.对外暴露了一些api，reales lock trylock</p>
+<p>4.cas操作</p>
+<h4 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h4><p>保证了可见，有序性</p>
+<p>dcl需要volatile吗？为什么需要</p>
+<h4 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h4><p>为什么要用线程池？</p>
+<p>管理线程，防止无休止的创建</p>
+<p>线程池怎么用的，参数怎么配的？</p>
+<p>int  corepoolsize      核心线程数</p>
+<p>int  maximumpoolsize    最大线程数</p>
+<p>long  keepalivetime         时间</p>
+<p>TimeUnit  unit                 时间单位</p>
+<p>BlockingQueue<Runnable> workQueue      阻塞队列</p>
+<p>ThreadFactory threadFactory                 创建线程的工厂</p>
+<p>RejectedWxecutionHandler handler         如果都满了，队列满了，最大线程数满了，拒绝策略</p>
+<p>1.执行线程。已有线程数小于核心线程数，会通过worker里的thread.start开启线程</p>
+<p>2.这个线程会执行run方法，run方法里面自选调用传进来</p>
+<p>3.run不为空都会执行第二步，run还会被阻塞队列获取，如果阻塞队列不为空，那么线程一直在执行</p>
+<p>4.如果阻塞队列为空，如果有线程需要回收，会根据keepAliveTime与unit来进行poll，到时间就回收，否则take</p>
+<p>5.需要回收的条件：1.线程数大于核心线程 2.设置allowCreThreadTimeOut=true</p>
+<h4 id="死锁的四大条件"><a href="#死锁的四大条件" class="headerlink" title="死锁的四大条件"></a>死锁的四大条件</h4><p>1.互斥</p>
+<p>2.持有等待</p>
+<p>3.不可抢占</p>
+<p>4.循环等待</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/27/第三次复习/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -792,80 +882,6 @@
 <p>生产者抛消息给队列，队列没有消息，队列绑定了过期的exchange或者queue，消息里面有设置过期时间，过期后就把消息丢给对应的exchange或者queue</p>
 <p>启用插件</p>
 <p>rabbitmq-plugins enable rabbitmq_management</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/16/rabbitmq 工作模型/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-15T17:15:36.690Z" itemprop="datePublished"> Published 2021-08-16</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="rabbitmq-工作模型"><a href="#rabbitmq-工作模型" class="headerlink" title="rabbitmq 工作模型"></a>rabbitmq 工作模型</h3><p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210814110251211.png" alt="image-20210814110251211"></p>
-<p>生产者–channel–broker–channel–consumer</p>
-<p>broker里面的queue是放在erlang写的Mnesia数据库里面</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">while&#123;</span><br><span class="line"></span><br><span class="line">   channel.basicGet();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">channel.basicPublish(msg);</span><br><span class="line"></span><br><span class="line">channel.basicPublish(flag,msg);</span><br></pre></td></tr></table></figure>
-
-
-
-<p>exchange来路由消息</p>
-<p>vhost</p>
-<h3 id="Exchange路由消息详解"><a href="#Exchange路由消息详解" class="headerlink" title="Exchange路由消息详解"></a>Exchange路由消息详解</h3><h4 id="直连类型"><a href="#直连类型" class="headerlink" title="直连类型"></a>直连类型</h4><p>![image-20210814141557476](C:\Users\admin\Desktop\rabbitmq 工作模型\image-20210814141557476.png)</p>
-<p>消息的路由键：routing key</p>
-<p>channel.basicPublish(exc_name,”spring”,”msg1”);</p>
-<p>exc_name:exchange直连交换机名称</p>
-<p>spring：routing key</p>
-<p>msg1：消息内容</p>
-<p>路由键==绑定建</p>
-<h4 id="topic主题"><a href="#topic主题" class="headerlink" title="topic主题"></a>topic主题</h4><p>*一个单词</p>
-<p>#0个或者多个单词</p>
-<p>routing key可以带通配符</p>
-<h4 id="fanout广播"><a href="#fanout广播" class="headerlink" title="fanout广播"></a>fanout广播</h4><p>routing key为空</p>
-<p> 所有绑定exchange的queue都会收到消息</p>
-<h3 id="rabbitmq的基本使用"><a href="#rabbitmq的基本使用" class="headerlink" title="rabbitmq的基本使用"></a>rabbitmq的基本使用</h3><p>1.引入依赖</p>
-<p>2.消费者</p>
-<p>3.生产者</p>
-<p>4.</p>
 
         
         

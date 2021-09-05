@@ -11,15 +11,15 @@
     
 
     
-    <meta name="description" content="第三次复习spring管理bean IOC：控制反正，交给spring去管理 aop：动态代理，默认，实现了接口的jdk，否则是cglib，也可以配置 IOC过程1.扫描 2.将扫描的结果封装为beandefenition，放到beandefinitionmap 3.实例化bean，调用getBean，封装成beanwrapper 4.applybeanpostprocessorbeforeini">
+    <meta name="description" content="多线程的复习hashmap与chm扩容因子 0.75 数组+链表  或者数组+红黑树 什么时候转红黑树？ 1.链表长度大于8的时候 2.数组长度大于64 红黑树在节点小于6时会变成链表 chm cas、synchronize 1.7链表+数组    头插法-死循环 1.8链表+数组+红黑树 64扩容   尾插法 jdk1.8取消了重复锁，使用synchronize reentranlock1.aq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yorkiiz">
-<meta property="og:url" content="https://yorkiiz.github.io/2021/08/27/%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/09/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%A4%8D%E4%B9%A0/index.html">
 <meta property="og:site_name" content="yorkiiz">
-<meta property="og:description" content="第三次复习spring管理bean IOC：控制反正，交给spring去管理 aop：动态代理，默认，实现了接口的jdk，否则是cglib，也可以配置 IOC过程1.扫描 2.将扫描的结果封装为beandefenition，放到beandefinitionmap 3.实例化bean，调用getBean，封装成beanwrapper 4.applybeanpostprocessorbeforeini">
+<meta property="og:description" content="多线程的复习hashmap与chm扩容因子 0.75 数组+链表  或者数组+红黑树 什么时候转红黑树？ 1.链表长度大于8的时候 2.数组长度大于64 红黑树在节点小于6时会变成链表 chm cas、synchronize 1.7链表+数组    头插法-死循环 1.8链表+数组+红黑树 64扩容   尾插法 jdk1.8取消了重复锁，使用synchronize reentranlock1.aq">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-27T14:38:24.608Z">
-<meta property="article:modified_time" content="2021-08-27T14:38:06.524Z">
+<meta property="article:published_time" content="2021-09-05T14:50:29.039Z">
+<meta property="article:modified_time" content="2021-09-05T14:50:10.219Z">
 <meta property="article:author" content="yorkiiz">
 <meta name="twitter:card" content="summary">
 
@@ -35,8 +35,6 @@
     
     
 <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/%02.css">
-<link rel="stylesheet" href="/.css">
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
@@ -85,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2021/08/27/第三次复习/" title="" itemprop="url"></a>
+      <a href="/2021/09/05/多线程的复习/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
 		
   <p class="article-time">
-    <time datetime="2021-08-27T14:38:24.608Z" itemprop="datePublished"> Published 2021-08-27</time>
+    <time datetime="2021-09-05T14:50:29.039Z" itemprop="datePublished"> Published 2021-09-05</time>
     
   </p>
 </header>
@@ -101,28 +99,52 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">第三次复习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spring"><span class="toc-number">2.</span> <span class="toc-text">spring</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IOC%E8%BF%87%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">IOC过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#springboot"><span class="toc-number">3.</span> <span class="toc-text">springboot</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E6%92%AD%E6%9C%BA%E5%88%B6"><span class="toc-number">3.1.</span> <span class="toc-text">传播机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%B1%E6%95%88%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">3.2.</span> <span class="toc-text">失效的场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mybatis"><span class="toc-number">4.</span> <span class="toc-text">mybatis</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">多线程的复习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#hashmap%E4%B8%8Echm"><span class="toc-number">1.1.</span> <span class="toc-text">hashmap与chm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reentranlock"><span class="toc-number">1.2.</span> <span class="toc-text">reentranlock</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AQS"><span class="toc-number">1.3.</span> <span class="toc-text">AQS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile"><span class="toc-number">1.4.</span> <span class="toc-text">volatile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.5.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E5%A4%A7%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">死锁的四大条件</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h3 id="第三次复习"><a href="#第三次复习" class="headerlink" title="第三次复习"></a>第三次复习</h3><h3 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h3><p>管理bean</p>
-<p>IOC：控制反正，交给spring去管理</p>
-<p>aop：动态代理，默认，实现了接口的jdk，否则是cglib，也可以配置</p>
-<h4 id="IOC过程"><a href="#IOC过程" class="headerlink" title="IOC过程"></a>IOC过程</h4><p>1.扫描</p>
-<p>2.将扫描的结果封装为beandefenition，放到beandefinitionmap</p>
-<p>3.实例化bean，调用getBean，封装成beanwrapper</p>
-<p>4.applybeanpostprocessorbeforeinitialization</p>
-<p>5.invokeinitmethods调用bean初始化方法</p>
-<p>6.applybeanpostprocessor</p>
-<p>7销毁</p>
-<h3 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h3><h4 id="传播机制"><a href="#传播机制" class="headerlink" title="传播机制"></a>传播机制</h4><p>required：</p>
-<p>required_new：</p>
-<p>nested：</p>
-<h4 id="失效的场景"><a href="#失效的场景" class="headerlink" title="失效的场景"></a>失效的场景</h4><p>1.不是public，final</p>
-<p>2.数据库不支持</p>
-<p>3.没有调用代理类的方法，调用自己的方法</p>
-<p>4.可配的异常类型。默认runtime，可以配置其他的</p>
-<h3 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h3>  
+		<h3 id="多线程的复习"><a href="#多线程的复习" class="headerlink" title="多线程的复习"></a>多线程的复习</h3><h4 id="hashmap与chm"><a href="#hashmap与chm" class="headerlink" title="hashmap与chm"></a>hashmap与chm</h4><p>扩容因子 0.75</p>
+<p>数组+链表  或者数组+红黑树</p>
+<p>什么时候转红黑树？</p>
+<p>1.链表长度大于8的时候</p>
+<p>2.数组长度大于64</p>
+<p>红黑树在节点小于6时会变成链表</p>
+<p>chm</p>
+<p>cas、synchronize</p>
+<p>1.7链表+数组    头插法-死循环</p>
+<p>1.8链表+数组+红黑树 64扩容   尾插法</p>
+<p>jdk1.8取消了重复锁，使用synchronize</p>
+<h4 id="reentranlock"><a href="#reentranlock" class="headerlink" title="reentranlock"></a>reentranlock</h4><p>1.aqs里面有一个volitale修饰的stat字段，标记有没有抢到锁，如果大于1，那么就有，并且代表重复次数</p>
+<p>2.其他获取锁的线程，获取锁失败，那么就会进去aqs里面的一个等待队列</p>
+<p>3.假如等待队列后，自旋获取锁，如果获取不到锁，进行park</p>
+<p>4.如果获取到锁的线程执行完毕，必须手动调用unlock，unlock把state赋值为0，这是所有线程重新来抢占锁</p>
+<p>5.对新的</p>
+<h4 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h4><p>1.作用，是什么</p>
+<p>2.那些数据结构，比如state，node clh队列</p>
+<p>3.对外暴露了一些api，reales lock trylock</p>
+<p>4.cas操作</p>
+<h4 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h4><p>保证了可见，有序性</p>
+<p>dcl需要volatile吗？为什么需要</p>
+<h4 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h4><p>为什么要用线程池？</p>
+<p>管理线程，防止无休止的创建</p>
+<p>线程池怎么用的，参数怎么配的？</p>
+<p>int  corepoolsize      核心线程数</p>
+<p>int  maximumpoolsize    最大线程数</p>
+<p>long  keepalivetime         时间</p>
+<p>TimeUnit  unit                 时间单位</p>
+<p>BlockingQueue<Runnable> workQueue      阻塞队列</p>
+<p>ThreadFactory threadFactory                 创建线程的工厂</p>
+<p>RejectedWxecutionHandler handler         如果都满了，队列满了，最大线程数满了，拒绝策略</p>
+<p>1.执行线程。已有线程数小于核心线程数，会通过worker里的thread.start开启线程</p>
+<p>2.这个线程会执行run方法，run方法里面自选调用传进来</p>
+<p>3.run不为空都会执行第二步，run还会被阻塞队列获取，如果阻塞队列不为空，那么线程一直在执行</p>
+<p>4.如果阻塞队列为空，如果有线程需要回收，会根据keepAliveTime与unit来进行poll，到时间就回收，否则take</p>
+<p>5.需要回收的条件：1.线程数大于核心线程 2.设置allowCreThreadTimeOut=true</p>
+<h4 id="死锁的四大条件"><a href="#死锁的四大条件" class="headerlink" title="死锁的四大条件"></a>死锁的四大条件</h4><p>1.互斥</p>
+<p>2.持有等待</p>
+<p>3.不可抢占</p>
+<p>4.循环等待</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -134,7 +156,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://yorkiiz.github.io/2021/08/27/%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%A4%8D%E4%B9%A0/" data-title="yorkiiz" data-tsina="" class="share clearfix">
+	  <div data-url="https://yorkiiz.github.io/2021/09/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%A4%8D%E4%B9%A0/" data-title="yorkiiz" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -147,17 +169,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2021/09/05/多线程的复习/" title="">
-  <strong>上一篇：</strong><br/>
-  <span>
-  (no title)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2021/08/27/复习第二天/"  title="">
+<a href="/2021/08/27/第三次复习/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -176,7 +190,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">第三次复习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spring"><span class="toc-number">2.</span> <span class="toc-text">spring</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IOC%E8%BF%87%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">IOC过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#springboot"><span class="toc-number">3.</span> <span class="toc-text">springboot</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E6%92%AD%E6%9C%BA%E5%88%B6"><span class="toc-number">3.1.</span> <span class="toc-text">传播机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%B1%E6%95%88%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">3.2.</span> <span class="toc-text">失效的场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mybatis"><span class="toc-number">4.</span> <span class="toc-text">mybatis</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">多线程的复习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#hashmap%E4%B8%8Echm"><span class="toc-number">1.1.</span> <span class="toc-text">hashmap与chm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reentranlock"><span class="toc-number">1.2.</span> <span class="toc-text">reentranlock</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AQS"><span class="toc-number">1.3.</span> <span class="toc-text">AQS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile"><span class="toc-number">1.4.</span> <span class="toc-text">volatile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.5.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E5%A4%A7%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">死锁的四大条件</span></a></li></ol></li></ol>
  
   </div>
 

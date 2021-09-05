@@ -83,6 +83,80 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/16/rabbitmq 工作模型/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-15T17:15:36.690Z" itemprop="datePublished"> Published 2021-08-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="rabbitmq-工作模型"><a href="#rabbitmq-工作模型" class="headerlink" title="rabbitmq 工作模型"></a>rabbitmq 工作模型</h3><p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210814110251211.png" alt="image-20210814110251211"></p>
+<p>生产者–channel–broker–channel–consumer</p>
+<p>broker里面的queue是放在erlang写的Mnesia数据库里面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">while&#123;</span><br><span class="line"></span><br><span class="line">   channel.basicGet();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">channel.basicPublish(msg);</span><br><span class="line"></span><br><span class="line">channel.basicPublish(flag,msg);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>exchange来路由消息</p>
+<p>vhost</p>
+<h3 id="Exchange路由消息详解"><a href="#Exchange路由消息详解" class="headerlink" title="Exchange路由消息详解"></a>Exchange路由消息详解</h3><h4 id="直连类型"><a href="#直连类型" class="headerlink" title="直连类型"></a>直连类型</h4><p>![image-20210814141557476](C:\Users\admin\Desktop\rabbitmq 工作模型\image-20210814141557476.png)</p>
+<p>消息的路由键：routing key</p>
+<p>channel.basicPublish(exc_name,”spring”,”msg1”);</p>
+<p>exc_name:exchange直连交换机名称</p>
+<p>spring：routing key</p>
+<p>msg1：消息内容</p>
+<p>路由键==绑定建</p>
+<h4 id="topic主题"><a href="#topic主题" class="headerlink" title="topic主题"></a>topic主题</h4><p>*一个单词</p>
+<p>#0个或者多个单词</p>
+<p>routing key可以带通配符</p>
+<h4 id="fanout广播"><a href="#fanout广播" class="headerlink" title="fanout广播"></a>fanout广播</h4><p>routing key为空</p>
+<p> 所有绑定exchange的queue都会收到消息</p>
+<h3 id="rabbitmq的基本使用"><a href="#rabbitmq的基本使用" class="headerlink" title="rabbitmq的基本使用"></a>rabbitmq的基本使用</h3><p>1.引入依赖</p>
+<p>2.消费者</p>
+<p>3.生产者</p>
+<p>4.</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/16/rabbitmq与erlang安装/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -719,62 +793,6 @@
 <p>Configure-&gt;Settings-&gt;Maven</p>
 <p>Maven home directory选择设定好的版本，local repository就会自动变更，如果没有自动变更说明上一步配置文件设置错了，至此maven就已经配置好了。</p>
 <p><img src="C:\Users\admin\Desktop\idea.JPG" alt="idea"></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/05/Reentranlock/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-05T15:14:47.443Z" itemprop="datePublished"> Published 2021-08-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Reentranlock</p>
-<p>thread1 执行业务代码lock</p>
-<p>把aqs里的state改成1  cas操作aba，aba操作加版本号</p>
-<p>park和unpark可以指定线程</p>
-<p>非公平锁的体现，前线程执行完以后，unpark的线程和新来的线程同时抢占锁</p>
-<p>公平锁和非公平锁的区别：</p>
-<p>只能队列里面的抢占，可以队列里面的线程和刚进来的线程</p>
 
         
         

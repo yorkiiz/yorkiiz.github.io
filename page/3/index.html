@@ -83,6 +83,62 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/05/Reentranlock/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-05T15:14:47.443Z" itemprop="datePublished"> Published 2021-08-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Reentranlock</p>
+<p>thread1 执行业务代码lock</p>
+<p>把aqs里的state改成1  cas操作aba，aba操作加版本号</p>
+<p>park和unpark可以指定线程</p>
+<p>非公平锁的体现，前线程执行完以后，unpark的线程和新来的线程同时抢占锁</p>
+<p>公平锁和非公平锁的区别：</p>
+<p>只能队列里面的抢占，可以队列里面的线程和刚进来的线程</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/05/redis配置/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
