@@ -1,0 +1,548 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>yorkiiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="yorkiiz">
+    
+
+    
+    <meta name="description" content="spring IOC核心容器1.BeanFactory  工厂的顶层接口，但是只负责生产对象，不负责怎么生产对象。 IOC容器负责具体生产过程。 2.BeanDefinition bean对象的定义  3.BeanDefinitionReader bean的解析  web IOC初始化流程   序号&#x2F;类名 DispatcherServlet FrameworkServlet HttpServlet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yorkiiz">
+<meta property="og:url" content="https://yorkiiz.github.io/2021/09/24/spring%20IOC/index.html">
+<meta property="og:site_name" content="yorkiiz">
+<meta property="og:description" content="spring IOC核心容器1.BeanFactory  工厂的顶层接口，但是只负责生产对象，不负责怎么生产对象。 IOC容器负责具体生产过程。 2.BeanDefinition bean对象的定义  3.BeanDefinitionReader bean的解析  web IOC初始化流程   序号&#x2F;类名 DispatcherServlet FrameworkServlet HttpServlet">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/yorkiiz/picture/master/20210920174740.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20210920180524436.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yorkiiz/picture/master/20210920182031.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yorkiiz/picture/master/20210921103448.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yorkiiz/picture/master/%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E6%89%8B%E7%BB%98Spring%20IoC%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%8F%E5%9B%BE.jpg">
+<meta property="article:published_time" content="2021-09-23T16:55:56.572Z">
+<meta property="article:modified_time" content="2021-09-21T12:25:55.588Z">
+<meta property="article:author" content="yorkiiz">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yorkiiz/picture/master/20210920174740.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="yorkiiz" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="yorkiiz" title="yorkiiz"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="yorkiiz">yorkiiz</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yorkiiz.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/09/24/spring IOC/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-09-23T16:55:56.572Z" itemprop="datePublished"> Published 2021-09-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#spring-IOC"><span class="toc-number">1.</span> <span class="toc-text">spring IOC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%AE%B9%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">核心容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web-IOC%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">web IOC初始化流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Exml%E7%9A%84IOC%E5%AE%B9%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">基于xml的IOC容器初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IOC%E5%AE%B9%E5%99%A8%E7%9A%84%E5%90%AF%E5%8A%A8"><span class="toc-number">2.1.</span> <span class="toc-text">IOC容器的启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.</span> <span class="toc-text">容器的创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84"><span class="toc-number">2.3.</span> <span class="toc-text">载入配置路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E8%B7%AF%E5%BE%84%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-number">2.4.</span> <span class="toc-text">分配路径处理策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="toc-number">2.5.</span> <span class="toc-text">解析配置文件路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E5%86%85%E5%AE%B9"><span class="toc-number">2.6.</span> <span class="toc-text">开始读取配置内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.7.</span> <span class="toc-text">准备文档对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E8%A7%A3%E6%9E%90%E7%AD%96%E7%95%A5"><span class="toc-number">2.8.</span> <span class="toc-text">分配解析策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86%E9%85%8D%E7%BD%AE%E8%BD%BD%E5%85%A5%E5%86%85%E5%AD%98"><span class="toc-number">2.9.</span> <span class="toc-text">将配置载入内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-bean-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">2.10.</span> <span class="toc-text">载入&lt;bean&gt;元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-property-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">2.11.</span> <span class="toc-text">载入&lt;property&gt;元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-property-gt-%E5%AD%90%E5%85%83%E7%B4%A0"><span class="toc-number">2.12.</span> <span class="toc-text">载入&lt;property&gt;子元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-list-gt-%E5%AD%90%E5%85%83%E7%B4%A0"><span class="toc-number">2.13.</span> <span class="toc-text">载入&lt;list&gt;子元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E6%B3%A8%E5%86%8C%E7%AD%96%E7%95%A5"><span class="toc-number">2.14.</span> <span class="toc-text">分配注册策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%91%E5%AE%B9%E5%99%A8%E6%B3%A8%E5%86%8C"><span class="toc-number">2.15.</span> <span class="toc-text">向容器注册</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EAnnotation%E7%9A%84IOC%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">基于Annotation的IOC初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%BD%8D%E6%89%AB%E6%8F%8FBean%E8%B7%AF%E5%BE%84"><span class="toc-number">3.2.</span> <span class="toc-text">定位扫描Bean路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96Annotation%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">3.3.</span> <span class="toc-text">读取Annotation元数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IOC%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="toc-number">4.</span> <span class="toc-text">IOC时序图</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="spring-IOC"><a href="#spring-IOC" class="headerlink" title="spring IOC"></a>spring IOC</h3><h4 id="核心容器"><a href="#核心容器" class="headerlink" title="核心容器"></a>核心容器</h4><p>1.BeanFactory</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210920174740.png"></p>
+<p>工厂的顶层接口，但是只负责生产对象，不负责怎么生产对象。</p>
+<p>IOC容器负责具体生产过程。</p>
+<p>2.BeanDefinition</p>
+<p>bean对象的定义</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210920180524436.png" alt="image-20210920180524436"></p>
+<p>3.BeanDefinitionReader</p>
+<p>bean的解析</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210920182031.png"></p>
+<h4 id="web-IOC初始化流程"><a href="#web-IOC初始化流程" class="headerlink" title="web IOC初始化流程"></a>web IOC初始化流程</h4><table>
+<thead>
+<tr>
+<th>序号/类名</th>
+<th>DispatcherServlet</th>
+<th>FrameworkServlet</th>
+<th>HttpServletBean</th>
+<th>HttpServlet</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+<td>init</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>initServletBean</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>initWebApplicationContext</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>configureAndRefreshWebApplicationContext</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>refresh</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>onRefresh</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>initStrategies</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="基于xml的IOC容器初始化"><a href="#基于xml的IOC容器初始化" class="headerlink" title="基于xml的IOC容器初始化"></a>基于xml的IOC容器初始化</h3><p>IOC容器的初始化包括beandefinition的resource定位，加载和注册三个基本过程</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210921103448.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">super(parent);   //设置容器资源加载器</span><br><span class="line">this.setConfigLocations(configLocations);//设置bean资源路径定位</span><br><span class="line"> this.refresh();//开始启动</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="IOC容器的启动"><a href="#IOC容器的启动" class="headerlink" title="IOC容器的启动"></a>IOC容器的启动</h4><p>IOC容器对bean配置资源的载入是从refresh（）函数开始的，refresh是一个模板方法，规定了IOC容器的启动流程，有些逻辑交给子类实现。ClassPathXmlApplicationContext通过调用父类AbstractApplicationContext的refresh方法启动IOC容器对Bean定义的载入过程</p>
+<p>作用：IOC容器创建前，如果已经有容器存在，把已经有的容器给销毁，保证refresh之后使用的是新建立起来的IOC容器</p>
+<h4 id="容器的创建"><a href="#容器的创建" class="headerlink" title="容器的创建"></a>容器的创建</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AbstractApplicationContext中 obtainFreshBeanFactory方法调用子容器的refreshBeanFactory</span><br><span class="line">实际实现是在AbstractRefreshableApplicationContext中</span><br></pre></td></tr></table></figure>
+
+<p>先销毁，再载入</p>
+<h4 id="载入配置路径"><a href="#载入配置路径" class="headerlink" title="载入配置路径"></a>载入配置路径</h4><p>AbstractRefreshableApplicationContext中定义了抽象的loadBeanDefinitions方法，实际实现是其子类AbstractXmlApplicatioContext中对该方法实现，并且调用了loadBeanDefinitions方法载入Bean</p>
+<h4 id="分配路径处理策略"><a href="#分配路径处理策略" class="headerlink" title="分配路径处理策略"></a>分配路径处理策略</h4><p>loadBeanDefinitions方法对Bean进行加载</p>
+<p>![image-20210921163013437](C:\Users\admin\Desktop\spring IOC\image-20210921163013437.png)</p>
+<h4 id="解析配置文件路径"><a href="#解析配置文件路径" class="headerlink" title="解析配置文件路径"></a>解析配置文件路径</h4><p>XmlBeanDefinitionReader通过调用ClassPathXmlApplicatioinContext的父类DefaultResourceLoader的getResource方法获取加载的资源</p>
+<h4 id="开始读取配置内容"><a href="#开始读取配置内容" class="headerlink" title="开始读取配置内容"></a>开始读取配置内容</h4><p>XmlBeanDefinitionReader里面的loadBeanDefinitions（Resource…）方法代表bean文件的资源定义以后的载入过程，将Bean配置信息转换成Document对象，该过程有documentLoader方法实现</p>
+<h4 id="准备文档对象"><a href="#准备文档对象" class="headerlink" title="准备文档对象"></a>准备文档对象</h4><p>DocumentLoader将Bean配置资源转换成Document对象</p>
+<h4 id="分配解析策略"><a href="#分配解析策略" class="headerlink" title="分配解析策略"></a>分配解析策略</h4><p>xmlBeanDefinitionReader类中的doLoadBeanDefinition方法从特定的XML文件中实际载入Bean配置资源的方法。</p>
+<p>Bean配置资源的载入解析分为以下两个过程：</p>
+<p>xml解析器将Bean配置信息转换得到Document对象；</p>
+<p>完成xml解析后，按照spring Bean的定义规则对Document对象进行解析</p>
+<h4 id="将配置载入内存"><a href="#将配置载入内存" class="headerlink" title="将配置载入内存"></a>将配置载入内存</h4><p>BeanDefinitionDocumentReader接口通过registerBeanDefinitions方法调用其实现类DefaultBeanDefinitionDocumentReader对Document对象进行解析</p>
+<h4 id="载入-lt-bean-gt-元素"><a href="#载入-lt-bean-gt-元素" class="headerlink" title="载入&lt;bean&gt;元素"></a>载入&lt;bean&gt;元素</h4><p>Bean配置信息中的&lt;import&gt;和&lt;alias&gt;元素解析在DefaultBeanDefinitionDocumentReader中已经完成，对Bean配置信息中使用最多的&lt;bean&gt;元素交由BeanDefinitionParserDelegate来解析</p>
+<h4 id="载入-lt-property-gt-元素"><a href="#载入-lt-property-gt-元素" class="headerlink" title="载入&lt;property&gt;元素"></a>载入&lt;property&gt;元素</h4><p>BeanDefinitionParserDelegate在解析&lt;Bean&gt;调用parsePropertyElements方法解析&lt;Bean&gt;元素中的&lt;property&gt;属性子元素</p>
+<h4 id="载入-lt-property-gt-子元素"><a href="#载入-lt-property-gt-子元素" class="headerlink" title="载入&lt;property&gt;子元素"></a>载入&lt;property&gt;子元素</h4><h4 id="载入-lt-list-gt-子元素"><a href="#载入-lt-list-gt-子元素" class="headerlink" title="载入&lt;list&gt;子元素"></a>载入&lt;list&gt;子元素</h4><h4 id="分配注册策略"><a href="#分配注册策略" class="headerlink" title="分配注册策略"></a>分配注册策略</h4><p>DefaultBeanDefinitionDocumentReader对Bean定义转换的Document对象解析的流程中，在其parseDefaultElement方法中完成对Document对象的解析流程中，封装BeanDefinition的BeanDefinitionHold对象，然后调用BeanDefinitionReaderUtils的registerBeanDefinition方法向IOC容器注册解析的Bean，BeanDefinitionReaderUtils的注册的源码如下</p>
+<h4 id="向容器注册"><a href="#向容器注册" class="headerlink" title="向容器注册"></a>向容器注册</h4><h3 id="基于Annotation的IOC初始化"><a href="#基于Annotation的IOC初始化" class="headerlink" title="基于Annotation的IOC初始化"></a>基于Annotation的IOC初始化</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>类级别的注解</p>
+<p>类内部的注解</p>
+<h4 id="定位扫描Bean路径"><a href="#定位扫描Bean路径" class="headerlink" title="定位扫描Bean路径"></a>定位扫描Bean路径</h4><p>直接将注解Bean注册到容器中</p>
+<p>通过扫描指定的包及其包下的所有类</p>
+<h4 id="读取Annotation元数据"><a href="#读取Annotation元数据" class="headerlink" title="读取Annotation元数据"></a>读取Annotation元数据</h4><h3 id="IOC时序图"><a href="#IOC时序图" class="headerlink" title="IOC时序图"></a>IOC时序图</h3><p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E6%89%8B%E7%BB%98Spring%20IoC%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%8F%E5%9B%BE.jpg"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://yorkiiz.github.io/2021/09/24/spring%20IOC/" data-title="yorkiiz" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2021/09/05/多线程的复习/"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#spring-IOC"><span class="toc-number">1.</span> <span class="toc-text">spring IOC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%AE%B9%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">核心容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web-IOC%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">web IOC初始化流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Exml%E7%9A%84IOC%E5%AE%B9%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">基于xml的IOC容器初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IOC%E5%AE%B9%E5%99%A8%E7%9A%84%E5%90%AF%E5%8A%A8"><span class="toc-number">2.1.</span> <span class="toc-text">IOC容器的启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.</span> <span class="toc-text">容器的创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84"><span class="toc-number">2.3.</span> <span class="toc-text">载入配置路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E8%B7%AF%E5%BE%84%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-number">2.4.</span> <span class="toc-text">分配路径处理策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="toc-number">2.5.</span> <span class="toc-text">解析配置文件路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E5%86%85%E5%AE%B9"><span class="toc-number">2.6.</span> <span class="toc-text">开始读取配置内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.7.</span> <span class="toc-text">准备文档对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E8%A7%A3%E6%9E%90%E7%AD%96%E7%95%A5"><span class="toc-number">2.8.</span> <span class="toc-text">分配解析策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86%E9%85%8D%E7%BD%AE%E8%BD%BD%E5%85%A5%E5%86%85%E5%AD%98"><span class="toc-number">2.9.</span> <span class="toc-text">将配置载入内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-bean-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">2.10.</span> <span class="toc-text">载入&lt;bean&gt;元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-property-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">2.11.</span> <span class="toc-text">载入&lt;property&gt;元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-property-gt-%E5%AD%90%E5%85%83%E7%B4%A0"><span class="toc-number">2.12.</span> <span class="toc-text">载入&lt;property&gt;子元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5-lt-list-gt-%E5%AD%90%E5%85%83%E7%B4%A0"><span class="toc-number">2.13.</span> <span class="toc-text">载入&lt;list&gt;子元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E6%B3%A8%E5%86%8C%E7%AD%96%E7%95%A5"><span class="toc-number">2.14.</span> <span class="toc-text">分配注册策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%91%E5%AE%B9%E5%99%A8%E6%B3%A8%E5%86%8C"><span class="toc-number">2.15.</span> <span class="toc-text">向容器注册</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EAnnotation%E7%9A%84IOC%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">基于Annotation的IOC初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%BD%8D%E6%89%AB%E6%8F%8FBean%E8%B7%AF%E5%BE%84"><span class="toc-number">3.2.</span> <span class="toc-text">定位扫描Bean路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96Annotation%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">3.3.</span> <span class="toc-text">读取Annotation元数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IOC%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="toc-number">4.</span> <span class="toc-text">IOC时序图</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m yorkiiz in github. <br/>
+			天道酬勤.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="yorkiiz">yorkiiz</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -83,6 +83,157 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/09/24/spring IOC/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-09-23T16:55:56.572Z" itemprop="datePublished"> Published 2021-09-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="spring-IOC"><a href="#spring-IOC" class="headerlink" title="spring IOC"></a>spring IOC</h3><h4 id="核心容器"><a href="#核心容器" class="headerlink" title="核心容器"></a>核心容器</h4><p>1.BeanFactory</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210920174740.png"></p>
+<p>工厂的顶层接口，但是只负责生产对象，不负责怎么生产对象。</p>
+<p>IOC容器负责具体生产过程。</p>
+<p>2.BeanDefinition</p>
+<p>bean对象的定义</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210920180524436.png" alt="image-20210920180524436"></p>
+<p>3.BeanDefinitionReader</p>
+<p>bean的解析</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210920182031.png"></p>
+<h4 id="web-IOC初始化流程"><a href="#web-IOC初始化流程" class="headerlink" title="web IOC初始化流程"></a>web IOC初始化流程</h4><table>
+<thead>
+<tr>
+<th>序号/类名</th>
+<th>DispatcherServlet</th>
+<th>FrameworkServlet</th>
+<th>HttpServletBean</th>
+<th>HttpServlet</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+<td>init</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>initServletBean</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>initWebApplicationContext</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>configureAndRefreshWebApplicationContext</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>refresh</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>onRefresh</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>initStrategies</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="基于xml的IOC容器初始化"><a href="#基于xml的IOC容器初始化" class="headerlink" title="基于xml的IOC容器初始化"></a>基于xml的IOC容器初始化</h3><p>IOC容器的初始化包括beandefinition的resource定位，加载和注册三个基本过程</p>
+<p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/20210921103448.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">super(parent);   //设置容器资源加载器</span><br><span class="line">this.setConfigLocations(configLocations);//设置bean资源路径定位</span><br><span class="line"> this.refresh();//开始启动</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="IOC容器的启动"><a href="#IOC容器的启动" class="headerlink" title="IOC容器的启动"></a>IOC容器的启动</h4><p>IOC容器对bean配置资源的载入是从refresh（）函数开始的，refresh是一个模板方法，规定了IOC容器的启动流程，有些逻辑交给子类实现。ClassPathXmlApplicationContext通过调用父类AbstractApplicationContext的refresh方法启动IOC容器对Bean定义的载入过程</p>
+<p>作用：IOC容器创建前，如果已经有容器存在，把已经有的容器给销毁，保证refresh之后使用的是新建立起来的IOC容器</p>
+<h4 id="容器的创建"><a href="#容器的创建" class="headerlink" title="容器的创建"></a>容器的创建</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AbstractApplicationContext中 obtainFreshBeanFactory方法调用子容器的refreshBeanFactory</span><br><span class="line">实际实现是在AbstractRefreshableApplicationContext中</span><br></pre></td></tr></table></figure>
+
+<p>先销毁，再载入</p>
+<h4 id="载入配置路径"><a href="#载入配置路径" class="headerlink" title="载入配置路径"></a>载入配置路径</h4><p>AbstractRefreshableApplicationContext中定义了抽象的loadBeanDefinitions方法，实际实现是其子类AbstractXmlApplicatioContext中对该方法实现，并且调用了loadBeanDefinitions方法载入Bean</p>
+<h4 id="分配路径处理策略"><a href="#分配路径处理策略" class="headerlink" title="分配路径处理策略"></a>分配路径处理策略</h4><p>loadBeanDefinitions方法对Bean进行加载</p>
+<p>![image-20210921163013437](C:\Users\admin\Desktop\spring IOC\image-20210921163013437.png)</p>
+<h4 id="解析配置文件路径"><a href="#解析配置文件路径" class="headerlink" title="解析配置文件路径"></a>解析配置文件路径</h4><p>XmlBeanDefinitionReader通过调用ClassPathXmlApplicatioinContext的父类DefaultResourceLoader的getResource方法获取加载的资源</p>
+<h4 id="开始读取配置内容"><a href="#开始读取配置内容" class="headerlink" title="开始读取配置内容"></a>开始读取配置内容</h4><p>XmlBeanDefinitionReader里面的loadBeanDefinitions（Resource…）方法代表bean文件的资源定义以后的载入过程，将Bean配置信息转换成Document对象，该过程有documentLoader方法实现</p>
+<h4 id="准备文档对象"><a href="#准备文档对象" class="headerlink" title="准备文档对象"></a>准备文档对象</h4><p>DocumentLoader将Bean配置资源转换成Document对象</p>
+<h4 id="分配解析策略"><a href="#分配解析策略" class="headerlink" title="分配解析策略"></a>分配解析策略</h4><p>xmlBeanDefinitionReader类中的doLoadBeanDefinition方法从特定的XML文件中实际载入Bean配置资源的方法。</p>
+<p>Bean配置资源的载入解析分为以下两个过程：</p>
+<p>xml解析器将Bean配置信息转换得到Document对象；</p>
+<p>完成xml解析后，按照spring Bean的定义规则对Document对象进行解析</p>
+<h4 id="将配置载入内存"><a href="#将配置载入内存" class="headerlink" title="将配置载入内存"></a>将配置载入内存</h4><p>BeanDefinitionDocumentReader接口通过registerBeanDefinitions方法调用其实现类DefaultBeanDefinitionDocumentReader对Document对象进行解析</p>
+<h4 id="载入-lt-bean-gt-元素"><a href="#载入-lt-bean-gt-元素" class="headerlink" title="载入&lt;bean&gt;元素"></a>载入&lt;bean&gt;元素</h4><p>Bean配置信息中的&lt;import&gt;和&lt;alias&gt;元素解析在DefaultBeanDefinitionDocumentReader中已经完成，对Bean配置信息中使用最多的&lt;bean&gt;元素交由BeanDefinitionParserDelegate来解析</p>
+<h4 id="载入-lt-property-gt-元素"><a href="#载入-lt-property-gt-元素" class="headerlink" title="载入&lt;property&gt;元素"></a>载入&lt;property&gt;元素</h4><p>BeanDefinitionParserDelegate在解析&lt;Bean&gt;调用parsePropertyElements方法解析&lt;Bean&gt;元素中的&lt;property&gt;属性子元素</p>
+<h4 id="载入-lt-property-gt-子元素"><a href="#载入-lt-property-gt-子元素" class="headerlink" title="载入&lt;property&gt;子元素"></a>载入&lt;property&gt;子元素</h4><h4 id="载入-lt-list-gt-子元素"><a href="#载入-lt-list-gt-子元素" class="headerlink" title="载入&lt;list&gt;子元素"></a>载入&lt;list&gt;子元素</h4><h4 id="分配注册策略"><a href="#分配注册策略" class="headerlink" title="分配注册策略"></a>分配注册策略</h4><p>DefaultBeanDefinitionDocumentReader对Bean定义转换的Document对象解析的流程中，在其parseDefaultElement方法中完成对Document对象的解析流程中，封装BeanDefinition的BeanDefinitionHold对象，然后调用BeanDefinitionReaderUtils的registerBeanDefinition方法向IOC容器注册解析的Bean，BeanDefinitionReaderUtils的注册的源码如下</p>
+<h4 id="向容器注册"><a href="#向容器注册" class="headerlink" title="向容器注册"></a>向容器注册</h4><h3 id="基于Annotation的IOC初始化"><a href="#基于Annotation的IOC初始化" class="headerlink" title="基于Annotation的IOC初始化"></a>基于Annotation的IOC初始化</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>类级别的注解</p>
+<p>类内部的注解</p>
+<h4 id="定位扫描Bean路径"><a href="#定位扫描Bean路径" class="headerlink" title="定位扫描Bean路径"></a>定位扫描Bean路径</h4><p>直接将注解Bean注册到容器中</p>
+<p>通过扫描指定的包及其包下的所有类</p>
+<h4 id="读取Annotation元数据"><a href="#读取Annotation元数据" class="headerlink" title="读取Annotation元数据"></a>读取Annotation元数据</h4><h3 id="IOC时序图"><a href="#IOC时序图" class="headerlink" title="IOC时序图"></a>IOC时序图</h3><p><img src="https://raw.githubusercontent.com/yorkiiz/picture/master/%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E6%89%8B%E7%BB%98Spring%20IoC%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%8F%E5%9B%BE.jpg"></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/09/05/多线程的复习/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -800,89 +951,6 @@
 <p><img src="C:\Users\admin\Desktop\阿里巴巴云商城--一业务架构知识学习\image-20210820000137587.png" alt="image-20210820000137587"></p>
 <p><img src="C:\Users\admin\Desktop\阿里巴巴云商城--一业务架构知识学习\image-20210820000339972.png" alt="image-20210820000339972"></p>
 <h4 id="项目结构详解"><a href="#项目结构详解" class="headerlink" title="项目结构详解"></a>项目结构详解</h4>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/17/rabbitmq操作指南/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-16T17:27:19.715Z" itemprop="datePublished"> Published 2021-08-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="rabbitmq操作指南"><a href="#rabbitmq操作指南" class="headerlink" title="rabbitmq操作指南"></a>rabbitmq操作指南</h3><h4 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h4><ul>
-<li>创建工厂（host，port，virtualhost，username，password）</li>
-<li>创建连接</li>
-<li>创建channel</li>
-<li>调用channel</li>
-</ul>
-<p>消费者方法：channel.basicConsume(,,)</p>
-<p>消费者创建mq配置：channel.exchangeDeclare；channel.queueDeclare；channel.queueBind</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.创建工厂</span></span><br><span class="line">ConnectionFactory factory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line"><span class="comment">// 连接IP</span></span><br><span class="line">factory.setHost(<span class="string">&quot;192.168.1.128&quot;</span>);</span><br><span class="line"><span class="comment">// 默认监听端口</span></span><br><span class="line">factory.setPort(<span class="number">5672</span>);</span><br><span class="line"><span class="comment">// 虚拟机</span></span><br><span class="line">factory.setVirtualHost(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置访问的用户</span></span><br><span class="line">factory.setUsername(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">factory.setPassword(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"><span class="comment">// 2.建立连接</span></span><br><span class="line">Connection conn = factory.newConnection();</span><br><span class="line"><span class="comment">// 3.创建消息通道</span></span><br><span class="line">Channel channel = conn.createChannel();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建消费者</span></span><br><span class="line">        Consumer consumer = <span class="keyword">new</span> DefaultConsumer(channel) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,</span></span></span><br><span class="line"><span class="params"><span class="function">                                       <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                String msg = <span class="keyword">new</span> String(body, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;Received message : &#x27;&quot;</span> + msg + <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;consumerTag : &quot;</span> + consumerTag );</span><br><span class="line">                System.out.println(<span class="string">&quot;deliveryTag : &quot;</span> + envelope.getDeliveryTag() );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.开始获取消息</span></span><br><span class="line"><span class="comment">// String queue, boolean autoAck, Consumer callback</span></span><br><span class="line">channel.basicConsume(QUEUE_NAME, <span class="keyword">true</span>, consumer);</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h4><ul>
-<li>创建工厂</li>
-<li>创建连接</li>
-<li>创建通道</li>
-<li>发送消息</li>
-</ul>
-<p>生产者方法：channel.basicpublish(,,)</p>
-<p>生产者必须关闭通道和连接</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.创建工厂</span></span><br><span class="line">ConnectionFactory factory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line"><span class="comment">// 连接IP</span></span><br><span class="line">factory.setHost(<span class="string">&quot;192.168.1.128&quot;</span>);</span><br><span class="line"><span class="comment">// 连接端口</span></span><br><span class="line">factory.setPort(<span class="number">5672</span>);</span><br><span class="line"><span class="comment">// 虚拟机</span></span><br><span class="line">factory.setVirtualHost(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"><span class="comment">// 用户</span></span><br><span class="line">factory.setUsername(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">factory.setPassword(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.建立连接</span></span><br><span class="line">Connection conn = factory.newConnection();</span><br><span class="line"><span class="comment">// 3.创建消息通道</span></span><br><span class="line">Channel channel = conn.createChannel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.发送消息</span></span><br><span class="line">String msg = <span class="string">&quot;Hello world, Rabbit MQ&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// String exchange, String routingKey, BasicProperties props, byte[] body</span></span><br><span class="line">channel.basicPublish(EXCHANGE_NAME, <span class="string">&quot;gupao.best&quot;</span>, <span class="keyword">null</span>, msg.getBytes());</span><br><span class="line"></span><br><span class="line">channel.close();</span><br><span class="line">conn.close();</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="队列删除"><a href="#队列删除" class="headerlink" title="队列删除"></a>队列删除</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">channel.queueDelete</span><br><span class="line">channel.exchangeDelete</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="死信队列"><a href="#死信队列" class="headerlink" title="死信队列"></a>死信队列</h3><p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210817010215043.png" alt="image-20210817010215043"></p>
-<p>生产者抛消息给队列，队列没有消息，队列绑定了过期的exchange或者queue，消息里面有设置过期时间，过期后就把消息丢给对应的exchange或者queue</p>
-<p>启用插件</p>
-<p>rabbitmq-plugins enable rabbitmq_management</p>
-
         
         
         <p class="article-more-link">
