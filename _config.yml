@@ -104,5 +104,5 @@ theme: jacman
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://oauth2: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@github.com/yorkiiz/yorkiiz.github.io.git
+  repo: https://oauth2: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@github.com/yorkiiz/yorkiiz.github.io.git
   branch: master
