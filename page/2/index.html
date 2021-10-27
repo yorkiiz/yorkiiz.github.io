@@ -83,6 +83,141 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2021/08/19/阿里巴巴云商城--一业务架构知识学习/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
+		
+  <p class="article-time">
+    <time datetime="2021-08-18T16:59:12.697Z" itemprop="datePublished"> Published 2021-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="阿里巴巴云商城–一业务架构知识学习"><a href="#阿里巴巴云商城–一业务架构知识学习" class="headerlink" title="阿里巴巴云商城–一业务架构知识学习"></a>阿里巴巴云商城–一业务架构知识学习</h3><h4 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h4><p>1.云商城架构学习</p>
+<p>2.基础数据管理，分布式文件管理</p>
+<p>3.高性能门户首页构建</p>
+<p>4.海量数据搜索实现</p>
+<p>5.详情页实战</p>
+<p>6.购物车、订单</p>
+<p>7.分布式事务解决方案</p>
+<p>8.微信支付</p>
+<p>9.商品秒杀-数据处理</p>
+<p>10.商品秒杀-热点数据实时发现系统</p>
+<p>11.商品秒杀-程序隔离解决方案</p>
+<p>12.官网鉴权</p>
+<p>13.生产环境灾难控制</p>
+<p>14.百万并发站点构建</p>
+<h4 id="业务架构环境"><a href="#业务架构环境" class="headerlink" title="业务架构环境"></a>业务架构环境</h4><p>电商模式</p>
+<p>业务学习</p>
+<p>云商城架构</p>
+<p>云商城表结构</p>
+<p>搭建环境</p>
+<p>增删改查实现</p>
+<h4 id="业务功能"><a href="#业务功能" class="headerlink" title="业务功能"></a>业务功能</h4><p>商品增删改查</p>
+<p>参数增删改查</p>
+<p>订单增删改查</p>
+<p>列表分类，首页广告（考虑并发）</p>
+<p>动态搜索条件-es</p>
+<p>加入购物车</p>
+<p>用户登录</p>
+<p>选择指定商品，进行下单</p>
+<p>支付</p>
+<p>秒杀并发量</p>
+<p>秒杀商品流量控制</p>
+<h4 id="前后端分离开发模式"><a href="#前后端分离开发模式" class="headerlink" title="前后端分离开发模式"></a>前后端分离开发模式</h4><p>js-html-jsp</p>
+<p>vue，elementUI，nodeJS</p>
+<p>用swagger定义接口，开发restful接口，最后更改接口路径</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210818225523479.png" alt="image-20210818225523479"></p>
+<h4 id="swagger的使用"><a href="#swagger的使用" class="headerlink" title="swagger的使用"></a>swagger的使用</h4><h4 id="云商城技术架构讲解"><a href="#云商城技术架构讲解" class="headerlink" title="云商城技术架构讲解"></a>云商城技术架构讲解</h4><p>用户—lvs400w—ngnix5w—gateway网关（限流，建权）—后端微服务—分布式事务—数据库</p>
+<h4 id="云商城技术架构"><a href="#云商城技术架构" class="headerlink" title="云商城技术架构"></a>云商城技术架构</h4><p>客户端</p>
+<ul>
+<li>PC     H5    小程序    Android    IOS</li>
+</ul>
+<p>接入层</p>
+<ul>
+<li>心跳切换VIP： keepalived    keepalived    keepalived    keepalived</li>
+<li>四层负载：       LVS集群          LVS集群          LVS集群          LVS集群         </li>
+<li>七层负载：       Nginx集群      Nginx集群      Nginx集群      Nginx集群      </li>
+</ul>
+<p>网关层</p>
+<ul>
+<li><p>应用网关：         Gateway Filter Gateway Router Gateway鉴权 Gateway限流</p>
+<p>​                             水平拓展</p>
+</li>
+</ul>
+<p>服务层</p>
+<ul>
+<li>商品服务    订单服务    用户服务    搜索服务    秒杀服务</li>
+</ul>
+<p>​                               SpringCloud Alibaba技术栈</p>
+<p>数据同步</p>
+<ul>
+<li>ES搜索数据同步   热门数据同步  缓存数据同步  静态页同步   Proxy缓存同步</li>
+</ul>
+<p>服务治理</p>
+<ul>
+<li>服务主册    服务发现    统一配置    服务熔断    服务限流</li>
+</ul>
+<p>数据处理</p>
+<ul>
+<li><p>MySQL    Redis6.x高速缓存    Ceph分布式文件存储     ElasticSearch千亿级数据    Apache Druid千亿日志析</p>
+</li>
+<li><p>Kafka实时日志收集   RocketMQ统一消息处理    XXL-Job分布式 事务    MongoDB购物车永久保存</p>
+</li>
+</ul>
+<p>第三方接口</p>
+<ul>
+<li>短信通道    支付通道</li>
+</ul>
+<p>​    微信、阿里云短信平台</p>
+<h4 id="云商城表结构分析"><a href="#云商城表结构分析" class="headerlink" title="云商城表结构分析"></a>云商城表结构分析</h4><p>集中式架构—-一个数据库</p>
+<p>分布式架构——对业务进行拆分</p>
+<p>订单明细</p>
+<p>秒杀表</p>
+<p>商品公共表</p>
+<p>商品单独表</p>
+<h4 id="项目开发准备环境"><a href="#项目开发准备环境" class="headerlink" title="项目开发准备环境"></a>项目开发准备环境</h4><p>redis cluster，ES，springcloud alibaba nacos，MySQL5.7，docker</p>
+<p><img src="C:\Users\admin\Desktop\阿里巴巴云商城--一业务架构知识学习\image-20210820000137587.png" alt="image-20210820000137587"></p>
+<p><img src="C:\Users\admin\Desktop\阿里巴巴云商城--一业务架构知识学习\image-20210820000339972.png" alt="image-20210820000339972"></p>
+<h4 id="项目结构详解"><a href="#项目结构详解" class="headerlink" title="项目结构详解"></a>项目结构详解</h4>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2021/08/17/rabbitmq操作指南/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -716,71 +851,6 @@
 <p>pfmerge result log qs</p>
 <p>应用：</p>
 <p>统计网站用户的访问量</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2021/08/09/redis Zset/" title="redis zset" itemprop="url">redis zset</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="yorkiiz" target="_blank" itemprop="author">yorkiiz</a>
-		
-  <p class="article-time">
-    <time datetime="2021-08-09T12:42:54.725Z" itemprop="datePublished"> Published 2021-08-09</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="redis-Zset"><a href="#redis-Zset" class="headerlink" title="redis Zset"></a>redis Zset</h3><p>每个值都有一个分数</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210809203057248.png" alt="image-20210809203057248"></p>
-<p>zset操作指令</p>
-<p>zadd myzset 10 java 20 php 30 ruby 40 cpp 50 python</p>
-<p>zrange myzset 0 -1 withscores</p>
-<p>zrevrange myzset 0 -1 withscores</p>
-<p>zrangebyscore myzset 20 30</p>
-<p>zrem myzset php cpp 移除</p>
-<p>zcard myzset 统计还有多少</p>
-<p>zcount myzset 20 60</p>
-<p>zcount myzset 20 60</p>
-<p>zrank myzset java</p>
-<p>zscore myzset java</p>
-<p>应用</p>
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210809204202227.png" alt="image-20210809204202227"></p>
-<p>排行榜</p>
 
         
         
